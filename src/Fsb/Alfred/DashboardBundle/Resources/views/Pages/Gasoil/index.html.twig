@@ -6,8 +6,8 @@
 
 {% block content %}
     <ul class='nav nav-tabs'>
-        <li class='active'><a href='#list' data-toggle='tab'>Liste</a></li>
-        <li><a href='#form' data-toggle='tab'>Ajouter</a></li>
+        <li class='active'><a href='#list' data-toggle='tab' class='btn btn-info'>Liste</a></li>
+        <li><a href='#form' data-toggle='tab' class='btn btn-info'>Ajouter</a></li>
     </ul>
     <div class='tab-content'>
         <div class='tab-pane active table-responsive' id='list'>
@@ -27,33 +27,31 @@
                             <tr>
                                 <td>Le {{ gasoil.createdAt|date('d-m-Y') }}</td>
                                 <td>{{ gasoil.kilometers }} kms</td>
-                                <td>{{ gasoil.price }} € / L</td>
-                                <td>{{ gasoil.capacity }} L</td>
-                                <td>{{ gasoil.amount }} €</td>
+                                <td>{{ gasoil.price|number_format(3, '.', ',') }} € / L</td>
+                                <td>{{ gasoil.capacity|number_format(2, '.', ',') }} L</td>
+                                <td>{{ gasoil.amount|number_format(2, '.', ',') }} €</td>
                             </tr>
                             {% if loop.index > 1 %}
-                                {% set amount = gasoil.amount - gasoils[loop.index0 - 1].amount %}
-                                <tr class='{% if amount > 0 %}warning{% else %}success{% endif %}'>
+                                {% set price = gasoil.price - gasoils[loop.index0 - 1].price %}
+                                <tr class='{% if price > 0 %}warning{% else %}success{% endif %}'>
                                     <td>Infos</td>
                                     <td>{{ gasoil.kilometers - gasoils[loop.index0 - 1].kilometers }} kms</td>
-                                    <td>{{ gasoil.price - gasoils[loop.index0 - 1].price }} € / L</td>
-                                    <td>{{ gasoil.capacity - gasoils[loop.index0 - 1].capacity }} L</td>
-                                    <td>{{ gasoil.amount - gasoils[loop.index0 - 1].amount }} €</td>
+                                    <td>{{ (gasoil.price - gasoils[loop.index0 - 1].price)|number_format(3, '.', ',') }} € / L</td>
+                                    <td>{{ (gasoil.capacity - gasoils[loop.index0 - 1].capacity)|number_format(2, '.', ',') }} L</td>
+                                    <td>{{ (gasoil.amount - gasoils[loop.index0 - 1].amount)|number_format(2, '.', ',') }} €</td>
                                 </tr>
                             {% endif %}
                         {% endfor %}
                         <tr class='total info'>
                             <td>Total</td>
                             {% if gasoils|length > 1 %}
-                                <td>{{ gasoils|last.kilometers - gasoils|first.kilometers }} kms</td>
-                                <td>{{ totalPrice / gasoils|length }} € / L</td>
-                                <td>{{ totalCapacity }} L</td>
-                                <td>{{ totalAmount }} €</td>
+                                <td colspan='2'>{{ gasoils|last.kilometers - gasoils|first.kilometers }} kms</td>
+                                <td>{{ totalCapacity|number_format(2, '.', ',') }} L</td>
+                                <td>{{ totalAmount|number_format(2, '.', ',') }} €</td>
                             {% else %}
-                                <td></td>
-                                <td>{{ totalPrice / gasoils|length }} € / L</td>
-                                <td>{{ totalCapacity }} L</td>
-                                <td>{{ totalAmount }} €</td>
+                                <td colspan='2'></td>
+                                <td>{{ totalCapacity|number_format(2, '.', ',') }} L</td>
+                                <td>{{ totalAmount|number_format(2, '.', ',') }} €</td>
                             {% endif %}
                         </tr>
                     {% else %}
@@ -83,28 +81,48 @@
         <div class='tab-pane' id='form'>
             <form action='{{ path('fsb_alfred_dashboard_page_gasoil_create') }}' method='post' {{ form_enctype(form) }}>
                 <fieldset>
-                    {{ form_row(form.capacity) }}
-                    {{ form_row(form.price) }}
-                    {{ form_row(form.kilometers) }}
+                    <div class='row'>
+                        <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12'>
+                            {{ form_row(form.capacity) }}
+                        </div>
+                        <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12'>
+                            {{ form_row(form.price) }}
+                        </div>
+                    </div>
                 </fieldset>
                 <fieldset>
-                    {{ form_row(form.place) }}
-                    {{ form_row(form.company) }}
-                    <div class='form-group'>
-                        {{ form_label(form.latitude) }}
-                        <div class='input-group'>
-                            {{ form_widget(form.latitude) }}
-                            <span class='input-group-addon'><span class='icon icon-spinner icon-spin'></span></span>
+                    <div class='row'>
+                        <div class='col-lg-4 col-md-4 col-sm-4 col-xs-12'>
+                            {{ form_row(form.kilometers) }}
                         </div>
-                        {{ form_errors(form.latitude) }}
+                        <div class='col-lg-4 col-md-4 col-sm-4 col-xs-12'>
+                            {{ form_row(form.place) }}
+                        </div>
+                        <div class='col-lg-4 col-md-4 col-sm-4 col-xs-12'>
+                            {{ form_row(form.company) }}
+                        </div>
                     </div>
-                    <div class='form-group'>
-                        {{ form_label(form.longitude) }}
-                        <div class='input-group'>
-                            {{ form_widget(form.longitude) }}
-                            <span class='input-group-addon'><span class='icon icon-spinner icon-spin'></span></span>
+                    <div class='row'>
+                        <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12'>
+                            <div class='form-group'>
+                                {{ form_label(form.latitude) }}
+                                <div class='input-group'>
+                                    {{ form_widget(form.latitude) }}
+                                    <span class='input-group-addon'><span class='icon icon-spinner icon-spin'></span></span>
+                                </div>
+                                {{ form_errors(form.latitude) }}
+                            </div>
                         </div>
-                        {{ form_errors(form.longitude) }}
+                        <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12'>
+                            <div class='form-group'>
+                                {{ form_label(form.longitude) }}
+                                <div class='input-group'>
+                                    {{ form_widget(form.longitude) }}
+                                    <span class='input-group-addon'><span class='icon icon-spinner icon-spin'></span></span>
+                                </div>
+                                {{ form_errors(form.longitude) }}
+                            </div>
+                        </div>
                     </div>
                     {{ form_rest(form) }}
                 </fieldset>

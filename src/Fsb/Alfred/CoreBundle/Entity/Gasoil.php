@@ -2,6 +2,9 @@
 
 namespace Fsb\Alfred\CoreBundle\Entity;
 
+use \Serializable;
+use \DateTime;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -10,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="gasoils")
  * @ORM\Entity(repositoryClass="Fsb\Alfred\CoreBundle\Entity\GasoilRepository")
  */
-class Gasoil
+class Gasoil implements Serializable
 {
     /**
      * @var integer
@@ -22,23 +25,23 @@ class Gasoil
     private $id;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(name="created_at", type="datetime")
      */
     private $createdAt;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
-     * @ORM\Column(name="removed_at", type="datetime")
+     * @ORM\Column(name="removed_at", type="datetime", nullable=true)
      */
     private $removedAt;
 
@@ -52,51 +55,86 @@ class Gasoil
     /**
      * @var string
      *
-     * @ORM\Column(name="place", type="string", length=255)
-     */
-    private $place;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="latitude", type="decimal")
-     */
-    private $latitude;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="longitude", type="decimal")
-     */
-    private $longitude;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="company", type="string", length=255)
-     */
-    private $company;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="kilometers", type="integer")
-     */
-    private $kilometers;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="price", type="decimal")
+     * @ORM\Column(name="price", type="decimal", precision=9, scale=5)
      */
     private $price;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="capacity", type="decimal")
+     * @ORM\Column(name="capacity", type="decimal", precision=9, scale=5)
      */
     private $capacity;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="kilometers", type="integer", nullable=true)
+     */
+    private $kilometers;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="place", type="string", length=255, nullable=true)
+     */
+    private $place;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="company", type="string", length=255, nullable=true)
+     */
+    private $company;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="latitude", type="decimal", nullable=true)
+     */
+    private $latitude;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="longitude", type="decimal", nullable=true)
+     */
+    private $longitude;
+
+    /**
+     * Public constructor
+     *
+     * @return Gasoil
+     */
+    public function __construct()
+    {
+        $this->createdAt = new DateTime();
+        $this->updatedAt = new DateTime();
+        $this->isHidden = false;
+        $this->salt = sha1(uniqid(null, true));
+
+        return $this;
+    }
+
+   /**
+     * @see \Serializable::serialize()
+     */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+        ));
+    }
+
+    /**
+     * @see \Serializable::unserialize()
+     */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+        ) = unserialize($serialized);
+    }
 
 
     /**
@@ -112,7 +150,7 @@ class Gasoil
     /**
      * Set createdAt
      *
-     * @param \DateTime $createdAt
+     * @param DateTime $createdAt
      * @return Gasoil
      */
     public function setCreatedAt($createdAt)
@@ -125,7 +163,7 @@ class Gasoil
     /**
      * Get createdAt
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getCreatedAt()
     {
@@ -135,7 +173,7 @@ class Gasoil
     /**
      * Set updatedAt
      *
-     * @param \DateTime $updatedAt
+     * @param DateTime $updatedAt
      * @return Gasoil
      */
     public function setUpdatedAt($updatedAt)
@@ -148,7 +186,7 @@ class Gasoil
     /**
      * Get updatedAt
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getUpdatedAt()
     {
@@ -158,7 +196,7 @@ class Gasoil
     /**
      * Set removedAt
      *
-     * @param \DateTime $removedAt
+     * @param DateTime $removedAt
      * @return Gasoil
      */
     public function setRemovedAt($removedAt)
@@ -171,7 +209,7 @@ class Gasoil
     /**
      * Get removedAt
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getRemovedAt()
     {
@@ -202,6 +240,75 @@ class Gasoil
     }
 
     /**
+     * Set capacity
+     *
+     * @param string $capacity
+     * @return Gasoil
+     */
+    public function setCapacity($capacity)
+    {
+        $this->capacity = $capacity;
+
+        return $this;
+    }
+
+    /**
+     * Get capacity
+     *
+     * @return string
+     */
+    public function getCapacity()
+    {
+        return $this->capacity;
+    }
+
+    /**
+     * Set price
+     *
+     * @param string $price
+     * @return Gasoil
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * Get price
+     *
+     * @return string
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    /**
+     * Set kilometers
+     *
+     * @param integer $kilometers
+     * @return Gasoil
+     */
+    public function setKilometers($kilometers)
+    {
+        $this->kilometers = $kilometers;
+
+        return $this;
+    }
+
+    /**
+     * Get kilometers
+     *
+     * @return integer
+     */
+    public function getKilometers()
+    {
+        return $this->kilometers;
+    }
+
+    /**
      * Set place
      *
      * @param string $place
@@ -222,6 +329,29 @@ class Gasoil
     public function getPlace()
     {
         return $this->place;
+    }
+
+    /**
+     * Set company
+     *
+     * @param string $company
+     * @return Gasoil
+     */
+    public function setCompany($company)
+    {
+        $this->company = $company;
+
+        return $this;
+    }
+
+    /**
+     * Get company
+     *
+     * @return string
+     */
+    public function getCompany()
+    {
+        return $this->company;
     }
 
     /**
@@ -271,94 +401,12 @@ class Gasoil
     }
 
     /**
-     * Set company
+     * Get total price
      *
-     * @param string $company
-     * @return Gasoil
+     * @return float
      */
-    public function setCompany($company)
+    public function getAmount()
     {
-        $this->company = $company;
-
-        return $this;
-    }
-
-    /**
-     * Get company
-     *
-     * @return string
-     */
-    public function getCompany()
-    {
-        return $this->company;
-    }
-
-    /**
-     * Set kilometers
-     *
-     * @param integer $kilometers
-     * @return Gasoil
-     */
-    public function setKilometers($kilometers)
-    {
-        $this->kilometers = $kilometers;
-
-        return $this;
-    }
-
-    /**
-     * Get kilometers
-     *
-     * @return integer
-     */
-    public function getKilometers()
-    {
-        return $this->kilometers;
-    }
-
-    /**
-     * Set price
-     *
-     * @param string $price
-     * @return Gasoil
-     */
-    public function setPrice($price)
-    {
-        $this->price = $price;
-
-        return $this;
-    }
-
-    /**
-     * Get price
-     *
-     * @return string
-     */
-    public function getPrice()
-    {
-        return $this->price;
-    }
-
-    /**
-     * Set capacity
-     *
-     * @param string $capacity
-     * @return Gasoil
-     */
-    public function setCapacity($capacity)
-    {
-        $this->capacity = $capacity;
-
-        return $this;
-    }
-
-    /**
-     * Get capacity
-     *
-     * @return string
-     */
-    public function getCapacity()
-    {
-        return $this->capacity;
+        return $this->capacity * $this->price;
     }
 }

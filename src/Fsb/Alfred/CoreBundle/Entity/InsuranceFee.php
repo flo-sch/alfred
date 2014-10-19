@@ -2,6 +2,9 @@
 
 namespace Fsb\Alfred\CoreBundle\Entity;
 
+use \Serializable;
+use \DateTime;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -22,23 +25,23 @@ class InsuranceFee
     private $id;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(name="created_at", type="datetime")
      */
     private $createdAt;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
-     * @ORM\Column(name="removed_at", type="datetime")
+     * @ORM\Column(name="removed_at", type="datetime", nullable=true)
      */
     private $removedAt;
 
@@ -50,7 +53,7 @@ class InsuranceFee
     private $isHidden;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(name="year", type="datetime")
      */
@@ -62,6 +65,41 @@ class InsuranceFee
      * @ORM\Column(name="price", type="decimal")
      */
     private $price;
+
+    /**
+     * Public constructor
+     *
+     * @return InsuranceFee
+     */
+    public function __construct()
+    {
+        $this->createdAt = new DateTime();
+        $this->updatedAt = new DateTime();
+        $this->isHidden = false;
+        $this->salt = sha1(uniqid(null, true));
+
+        return $this;
+    }
+
+   /**
+     * @see \Serializable::serialize()
+     */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+        ));
+    }
+
+    /**
+     * @see \Serializable::unserialize()
+     */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+        ) = unserialize($serialized);
+    }
 
 
     /**
@@ -77,7 +115,7 @@ class InsuranceFee
     /**
      * Set createdAt
      *
-     * @param \DateTime $createdAt
+     * @param DateTime $createdAt
      * @return InsuranceFee
      */
     public function setCreatedAt($createdAt)
@@ -90,7 +128,7 @@ class InsuranceFee
     /**
      * Get createdAt
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getCreatedAt()
     {
@@ -100,7 +138,7 @@ class InsuranceFee
     /**
      * Set updatedAt
      *
-     * @param \DateTime $updatedAt
+     * @param DateTime $updatedAt
      * @return InsuranceFee
      */
     public function setUpdatedAt($updatedAt)
@@ -113,7 +151,7 @@ class InsuranceFee
     /**
      * Get updatedAt
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getUpdatedAt()
     {
@@ -123,7 +161,7 @@ class InsuranceFee
     /**
      * Set removedAt
      *
-     * @param \DateTime $removedAt
+     * @param DateTime $removedAt
      * @return InsuranceFee
      */
     public function setRemovedAt($removedAt)
@@ -136,7 +174,7 @@ class InsuranceFee
     /**
      * Get removedAt
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getRemovedAt()
     {
@@ -169,7 +207,7 @@ class InsuranceFee
     /**
      * Set year
      *
-     * @param \DateTime $year
+     * @param DateTime $year
      * @return InsuranceFee
      */
     public function setYear($year)
@@ -182,7 +220,7 @@ class InsuranceFee
     /**
      * Get year
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getYear()
     {

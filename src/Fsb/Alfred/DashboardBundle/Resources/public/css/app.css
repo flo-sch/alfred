@@ -2066,3 +2066,6 @@ html body #main-container #site-content-wrapper {
 html body #main-container #site-content-wrapper.open {
   transform: translate3d(280px, 0, 0);
 }
+html body #main-container #site-content-wrapper .tab-content {
+  margin: 20px 0 0 0;
+}

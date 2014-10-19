@@ -20,7 +20,10 @@ class GasoilController extends FrontController
 
         return $this->render('FsbAlfredDashboardBundle:Pages/Gasoil:index.html.twig', array(
             'gasoils' => $gasoils,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'totalPrice' => $em->getRepository('FsbAlfredCoreBundle:Gasoil')->getTotalPrice(),
+            'totalCapacity' => $em->getRepository('FsbAlfredCoreBundle:Gasoil')->getTotalCapacity(),
+            'totalAmount' => $em->getRepository('FsbAlfredCoreBundle:Gasoil')->getTotalAmount()
         ));
     }
 

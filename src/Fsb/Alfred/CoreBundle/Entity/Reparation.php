@@ -2,6 +2,9 @@
 
 namespace Fsb\Alfred\CoreBundle\Entity;
 
+use \Serializable;
+use \DateTime;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -22,23 +25,23 @@ class Reparation
     private $id;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(name="created_at", type="datetime")
      */
     private $createdAt;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
-     * @ORM\Column(name="removed_at", type="datetime")
+     * @ORM\Column(name="removed_at", type="datetime", nullable=true)
      */
     private $removedAt;
 
@@ -98,6 +101,41 @@ class Reparation
      */
     private $price;
 
+    /**
+     * Public constructor
+     *
+     * @return Reparation
+     */
+    public function __construct()
+    {
+        $this->createdAt = new DateTime();
+        $this->updatedAt = new DateTime();
+        $this->isHidden = false;
+        $this->salt = sha1(uniqid(null, true));
+
+        return $this;
+    }
+
+   /**
+     * @see \Serializable::serialize()
+     */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+        ));
+    }
+
+    /**
+     * @see \Serializable::unserialize()
+     */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+        ) = unserialize($serialized);
+    }
+
 
     /**
      * Get id
@@ -112,7 +150,7 @@ class Reparation
     /**
      * Set createdAt
      *
-     * @param \DateTime $createdAt
+     * @param DateTime $createdAt
      * @return Reparation
      */
     public function setCreatedAt($createdAt)
@@ -125,7 +163,7 @@ class Reparation
     /**
      * Get createdAt
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getCreatedAt()
     {
@@ -135,7 +173,7 @@ class Reparation
     /**
      * Set updatedAt
      *
-     * @param \DateTime $updatedAt
+     * @param DateTime $updatedAt
      * @return Reparation
      */
     public function setUpdatedAt($updatedAt)
@@ -148,7 +186,7 @@ class Reparation
     /**
      * Get updatedAt
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getUpdatedAt()
     {
@@ -158,7 +196,7 @@ class Reparation
     /**
      * Set removedAt
      *
-     * @param \DateTime $removedAt
+     * @param DateTime $removedAt
      * @return Reparation
      */
     public function setRemovedAt($removedAt)
@@ -171,7 +209,7 @@ class Reparation
     /**
      * Get removedAt
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getRemovedAt()
     {
