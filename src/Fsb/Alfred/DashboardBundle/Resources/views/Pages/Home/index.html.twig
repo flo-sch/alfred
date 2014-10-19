@@ -1,0 +1,23 @@
+{% extends 'FsbAlfredDashboardBundle::sidebar.html.twig' %}
+
+{% block site_title %}{{ app.user.carName }}{% endblock %}
+
+{% block content %}
+    <h4>Statistiques moyennes</h4>
+    <table class='table table-bordered table-hover'>
+        <tbody>
+            <tr>
+                <th>Consommation moyenne</th>
+                <td>{{ averageConsommation }} L / 100kms</td>
+            </tr>
+            <tr>
+                <th>Prix moyen du carburant</th>
+                <td>{{ averageLiterPrice }} €</td>
+            </tr>
+            <tr>
+                <th>Coût moyen (total)</th>
+                <td>{{ averageCost }} € / km</td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}

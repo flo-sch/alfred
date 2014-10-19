@@ -1,0 +1,41 @@
+fsb_alfred_dashboard_homepage:
+    path:     /
+    defaults:
+        _controller: FsbAlfredDashboardBundle:Pages/Home:index
+    requirements:
+        _method: get
+
+fsb_alfred_dashboard_page_login:
+    path:     /login
+    defaults:
+        _controller: FsbAlfredDashboardBundle:Authentication:login
+    requirements:
+        _method: get
+
+fsb_alfred_dashboard_page_subscription:
+    path:     /subscription
+    defaults:
+        _controller: FsbAlfredDashboardBundle:Authentication:subscribe
+    requirements:
+        _method: get|post
+
+fsb_alfred_dashboard_page_profile:
+    path:     /profile
+    defaults:
+        _controller: FsbAlfredDashboardBundle:Pages/Profile:edit
+    requirements:
+        _method: get|post
+
+fsb_alfred_dashboard_page_login_check:
+    path:     /login_check
+    requirements:
+        _method: post
+
+fsb_alfred_dashboard_page_logout:
+    path:     /logout
+    requirements:
+        _method: get
+
+fsb_alfred_dashboard_gasoil:
+    resource: "@FsbAlfredDashboardBundle/Resources/config/routing/gasoil.yml"
+    prefix:   /gasoil

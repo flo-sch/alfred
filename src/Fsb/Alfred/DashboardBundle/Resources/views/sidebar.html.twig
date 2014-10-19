@@ -1,0 +1,24 @@
+{% extends 'FsbAlfredDashboardBundle::base.html.twig' %}
+
+{% block navbar %}
+    {{ parent() }}
+    <button type='button' class='navbar-toggle visible-xs visible-sm visible-md visible-lg' data-toggle='offcanvas' data-target='#site-content-wrapper'>
+        <span class='icon-bar'></span>
+        <span class='icon-bar'></span>
+        <span class='icon-bar'></span>
+    </button>
+{% endblock %}
+
+{% block pre_wrapper %}
+    <aside class='sidebar' role='navigation'>
+        <ul class='nav' id='sidebar-nav'>
+            <li><a href='{{ path('fsb_alfred_dashboard_page_profile') }}'>Profil</a></li>
+            <li><a href='{{ path('fsb_alfred_dashboard_page_gasoil') }}'>Carburant</a></li>
+        </ul>
+    </aside>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src='{{ asset('bundles/fsbalfreddashboard/js/sidebar.js') }}'></script>
+{% endblock %}

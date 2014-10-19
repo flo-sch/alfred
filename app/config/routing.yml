@@ -1,0 +1,3 @@
+fsb_alfred_dashboard_bundle:
+    resource: "@FsbAlfredDashboardBundle/Resources/config/routing.yml"
+    prefix:   /

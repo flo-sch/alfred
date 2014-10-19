@@ -1,0 +1,12 @@
+{% extends 'FsbAlfredDashboardBundle::sidebar.html.twig' %}
+
+{% form_theme form 'FsbAlfredDashboardBundle:Form:bootstrap.html.twig' %}
+
+{% block content %}
+    <div class='tab-pane' id='form'>
+        <form action='{{ path('fsb_alfred_dashboard_page_gasoil_create') }}' method='post' {{ form_enctype(form) }}>
+            {{ form_widget(form) }}
+            <input type='submit' class='btn btn-success' name='submit' value='Ajouter' />
+        </form>
+    </div>
+{% endblock %}

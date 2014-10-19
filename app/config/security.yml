@@ -1,12 +1,49 @@
 security:
+    encoders:
+        Fsb\Alfred\CoreBundle\Entity\Driver:
+            algorithm:            pbkdf2
+            hash_algorithm:       sha512
+            encode_as_base64:     true
+            iterations:           1000
+
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_USER
+        ROLE_DRIVER:       ROLE_USER
+        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_DRIVER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
     providers:
-        in_memory:
-            memory: ~
+        users:
+            entity:
+                class: Fsb\Alfred\CoreBundle\Entity\Driver
 
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        default:
-            anonymous: ~
+        dashboard_login:
+            pattern: ^/login$
+            security: false
+
+        dashboard_subscription:
+            pattern: ^/subscription$
+            security: false
+
+        dashboard:
+            pattern: ^/
+            provider: users
+            anonymous: false
+            form_login:
+                login_path: fsb_alfred_dashboard_page_login
+                check_path: fsb_alfred_dashboard_page_login_check
+                default_target_path: fsb_alfred_dashboard_homepage
+                post_only: true
+            logout:
+                path: fsb_alfred_dashboard_page_logout
+                target: /
+                invalidate_session: false
+
+    access_control:
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/subscription, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, roles: ROLE_DRIVER }

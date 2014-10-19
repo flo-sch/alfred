@@ -1,0 +1,23 @@
+{% extends 'FsbAlfredDashboardBundle::sidebar.html.twig' %}
+
+{% block stylesheets %}
+    {{  parent() }}
+    <link rel='stylesheet' href='{{ asset('bundles/fsbalfreddashboard/css/vendor/bootstrap/bootstrap-colorpicker.min.css') }}' />
+{% endblock %}
+
+{% form_theme form 'FsbAlfredDashboardBundle:Form:bootstrap.html.twig' %}
+
+{% block content %}
+    <form action='{{ path('fsb_alfred_dashboard_page_profile') }}' method='post' {{ form_enctype(form) }}>
+        {{ form_widget(form) }}
+        <div class='form-group'>
+            <input type='submit' class='btn btn-success' name='submit' value='Editer' />
+        </div>
+    </form>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src='{{ asset('bundles/fsbalfreddashboard/js/vendor/bootstrap/bootstrap-colorpicker.min.js') }}'></script>
+    <script src='{{ asset('bundles/fsbalfreddashboard/js/profile.js') }}'></script>
+{% endblock %}

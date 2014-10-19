@@ -1,0 +1,117 @@
+{% extends 'FsbAlfredDashboardBundle::sidebar.html.twig' %}
+
+{% form_theme form 'FsbAlfredDashboardBundle:Form:bootstrap.html.twig' %}
+
+{% block site_title %}{{ app.user.carName }}{% endblock %}
+
+{% block content %}
+    <ul class='nav nav-tabs'>
+        <li class='active'><a href='#list' data-toggle='tab'>Liste</a></li>
+        <li><a href='#form' data-toggle='tab'>Ajouter</a></li>
+    </ul>
+    <div class='tab-content'>
+        <div class='tab-pane active table-responsive' id='list'>
+            <table class='table table-hover table-condensed table-bordered'>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Kms</th>
+                        <th>Prix</th>
+                        <th>Capacité</th>
+                        <th>Montant</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if gasoils %}
+                        {% for gasoil in gasoils %}
+                            <tr>
+                                <td>Le {{ gasoil.createdAt|date('d-m-Y') }}</td>
+                                <td>{{ gasoil.kilometers }} kms</td>
+                                <td>{{ gasoil.price }} € / L</td>
+                                <td>{{ gasoil.capacity }} L</td>
+                                <td>{{ gasoil.amount }} €</td>
+                            </tr>
+                            {% if loop.index > 1 %}
+                                {% set amount = gasoil.amount - gasoils[loop.index0 - 1].amount %}
+                                <tr class='{% if amount > 0 %}warning{% else %}success{% endif %}'>
+                                    <td>Infos</td>
+                                    <td>{{ gasoil.kilometers - gasoils[loop.index0 - 1].kilometers }} kms</td>
+                                    <td>{{ gasoil.price - gasoils[loop.index0 - 1].price }} € / L</td>
+                                    <td>{{ gasoil.capacity - gasoils[loop.index0 - 1].capacity }} L</td>
+                                    <td>{{ gasoil.amount - gasoils[loop.index0 - 1].amount }} €</td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                        <tr class='total info'>
+                            <td>Total</td>
+                            {% if gasoils|length > 1 %}
+                                <td>{{ gasoils|last.kilometers - gasoils|first.kilometers }} kms</td>
+                                <td>{{ totalPrice / gasoils|length }} € / L</td>
+                                <td>{{ totalCapacity }} L</td>
+                                <td>{{ totalAmount }} €</td>
+                            {% else %}
+                                <td></td>
+                                <td>{{ totalPrice / gasoils|length }} € / L</td>
+                                <td>{{ totalCapacity }} L</td>
+                                <td>{{ totalAmount }} €</td>
+                            {% endif %}
+                        </tr>
+                    {% else %}
+                        <tr class='active'>
+                            <td colspan='5'>Aucun plein pour le moment</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+            {#
+            <h4>Statistiques</h4>
+            <hr />
+            <div class='row'>
+                <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                    <h5>Capacité</h5>
+                    <canvas id='gasoil-capacity-chart' width='400' height='400'></canvas>
+                </div>
+                <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                    <h5>Prix</h5>
+                    <canvas id='gasoil-price-chart' width='400' height='400'></canvas>
+                </div>
+            </div>
+            <h5>Consommation au litre</h5>
+            <div>{{ (100 * (totalCapacity - gasoils|last.capacity) / (gasoils|last.kilometers - gasoils|first.kilometers))|number_format(2, '.', ' ') }} L / 100 kms</div>
+            #}
+        </div>
+        <div class='tab-pane' id='form'>
+            <form action='{{ path('fsb_alfred_dashboard_page_gasoil_create') }}' method='post' {{ form_enctype(form) }}>
+                <fieldset>
+                    {{ form_row(form.capacity) }}
+                    {{ form_row(form.price) }}
+                    {{ form_row(form.kilometers) }}
+                </fieldset>
+                <fieldset>
+                    {{ form_row(form.place) }}
+                    {{ form_row(form.company) }}
+                    <div class='form-group'>
+                        {{ form_label(form.latitude) }}
+                        <div class='input-group'>
+                            {{ form_widget(form.latitude) }}
+                            <span class='input-group-addon'><span class='icon icon-spinner icon-spin'></span></span>
+                        </div>
+                        {{ form_errors(form.latitude) }}
+                    </div>
+                    <div class='form-group'>
+                        {{ form_label(form.longitude) }}
+                        <div class='input-group'>
+                            {{ form_widget(form.longitude) }}
+                            <span class='input-group-addon'><span class='icon icon-spinner icon-spin'></span></span>
+                        </div>
+                        {{ form_errors(form.longitude) }}
+                    </div>
+                    {{ form_rest(form) }}
+                </fieldset>
+                <div class='form-group'>
+                    <input type='submit' class='btn btn-success' name='submit' value='Ajouter' />
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
