@@ -6,11 +6,13 @@
 
 {% block content %}
     <ul class='nav nav-tabs'>
-        <li class='active'><a href='#list' data-toggle='tab' class='btn btn-info'>Liste</a></li>
-        <li><a href='#form' data-toggle='tab' class='btn btn-info'>Ajouter</a></li>
+        <li class='active'><a href='#list' data-toggle='tab' class='btn btn-default'>Liste</a></li>
+        <li><a href='#form' data-toggle='tab' class='btn btn-default'>Ajouter</a></li>
+        <li><a href='#statistiques' data-toggle='tab' class='btn btn-default'>Statistiques</a></li>
     </ul>
     <div class='tab-content'>
         <div class='tab-pane active table-responsive' id='list'>
+            <h4>Liste des pleins d'essence</h4>
             <table class='table table-hover table-condensed table-bordered'>
                 <thead>
                     <tr>
@@ -25,7 +27,7 @@
                     {% if gasoils %}
                         {% for gasoil in gasoils %}
                             <tr>
-                                <td>Le {{ gasoil.createdAt|date('d-m-Y') }}</td>
+                                <td>{{ gasoil.createdAt|date('d-m-Y') }}</td>
                                 <td>{{ gasoil.kilometers }} kms</td>
                                 <td>{{ gasoil.price|number_format(3, '.', ',') }} € / L</td>
                                 <td>{{ gasoil.capacity|number_format(2, '.', ',') }} L</td>
@@ -33,12 +35,13 @@
                             </tr>
                             {% if loop.index > 1 %}
                                 {% set price = gasoil.price - gasoils[loop.index0 - 1].price %}
-                                <tr class='{% if price > 0 %}warning{% else %}success{% endif %}'>
+                                {% set amount = gasoil.amount - gasoils[loop.index0 - 1].amount %}
+                                <tr class='line-infos {% if price > 0 %}danger{% else %}success{% endif %}'>
                                     <td>Infos</td>
-                                    <td>{{ gasoil.kilometers - gasoils[loop.index0 - 1].kilometers }} kms</td>
-                                    <td>{{ (gasoil.price - gasoils[loop.index0 - 1].price)|number_format(3, '.', ',') }} € / L</td>
+                                    <td>+{{ gasoil.kilometers - gasoils[loop.index0 - 1].kilometers }} kms</td>
+                                    <td>{% if price > 0 %}+{% endif %}{{ (gasoil.price - gasoils[loop.index0 - 1].price)|number_format(3, '.', ',') }} € / L</td>
                                     <td>{{ (gasoil.capacity - gasoils[loop.index0 - 1].capacity)|number_format(2, '.', ',') }} L</td>
-                                    <td>{{ (gasoil.amount - gasoils[loop.index0 - 1].amount)|number_format(2, '.', ',') }} €</td>
+                                    <td>{% if amount > 0 %}+{% endif %}{{ (gasoil.amount - gasoils[loop.index0 - 1].amount)|number_format(2, '.', ',') }} €</td>
                                 </tr>
                             {% endif %}
                         {% endfor %}
@@ -61,24 +64,9 @@
                     {% endif %}
                 </tbody>
             </table>
-            {#
-            <h4>Statistiques</h4>
-            <hr />
-            <div class='row'>
-                <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
-                    <h5>Capacité</h5>
-                    <canvas id='gasoil-capacity-chart' width='400' height='400'></canvas>
-                </div>
-                <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
-                    <h5>Prix</h5>
-                    <canvas id='gasoil-price-chart' width='400' height='400'></canvas>
-                </div>
-            </div>
-            <h5>Consommation au litre</h5>
-            <div>{{ (100 * (totalCapacity - gasoils|last.capacity) / (gasoils|last.kilometers - gasoils|first.kilometers))|number_format(2, '.', ' ') }} L / 100 kms</div>
-            #}
         </div>
         <div class='tab-pane' id='form'>
+            <h4>Renseigner un plein d'essence</h4>
             <form action='{{ path('fsb_alfred_dashboard_page_gasoil_create') }}' method='post' {{ form_enctype(form) }}>
                 <fieldset>
                     <div class='row'>
@@ -131,5 +119,78 @@
                 </div>
             </form>
         </div>
+        <div class='tab-pane' id='statistiques'>
+            <h4>Statistiques</h4>
+            <hr />
+            <div class='row'>
+                <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                    <h5>Capacité</h5>
+                    <canvas id='gasoil-capacity-chart' width='400' height='400'></canvas>
+                </div>
+                <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                    <h5>Prix</h5>
+                    <canvas id='gasoil-price-chart' width='400' height='400'></canvas>
+                </div>
+            </div>
+            <h5>Consommation moyenne au litre</h5>
+            <div>{{ (100 * (totalCapacity - gasoils|last.capacity) / (gasoils|last.kilometers - gasoils|first.kilometers))|number_format(2, '.', ' ') }} L / 100 kms</div>
+        </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src='{{ asset('bundles/fsbalfreddashboard/js/vendor/underscore-1.6.0.min.js') }}'></script>
+    <script src='{{ asset('bundles/fsbalfreddashboard/js/localised-form.min.js') }}'></script>
+    <script src='{{ asset('bundles/fsbalfreddashboard/js/vendor/chart-0.2.0.min.js') }}'></script>
+    <script src='{{ asset('bundles/fsbalfreddashboard/js/line-chart.js') }}'></script>
+    <script>
+        $(function () {
+            var localisedForm = new LocalisedForm(function (position) {
+                $('#fsb_alfred_dashboard_gasoil_type_latitude').val(position.coords.latitude).parent().hide();
+                $('#fsb_alfred_dashboard_gasoil_type_longitude').val(position.coords.longitude).parent().hide();
+            });
+            var capacity, price, __gasoil_capacity_chart__, __gasoil_price_chart__;
+            capacity = {
+                'labels': [
+                    {% for gasoil in gasoils %}
+                        '{{ gasoil.createdAt|date("d-m-Y") }}'{% if not loop.last %},{% endif %}
+                    {% endfor %}
+                ],
+                'datasets': [
+                    {
+                        'label': 'Capacité',
+                        'data': [
+                            {% for gasoil in gasoils %}
+                                {{ gasoil.capacity }}{% if not loop.last %},{% endif %}
+                            {% endfor %}
+                        ]
+                    }
+                ]
+            },
+            price = {
+                'labels': [
+                    {% for gasoil in gasoils %}
+                        '{{ gasoil.createdAt|date("d-m-Y") }}'{% if not loop.last %},{% endif %}
+                    {% endfor %}
+                ],
+                'datasets': [
+                    {
+                        'label': 'Prix',
+                        'data': [
+                            {% for gasoil in gasoils %}
+                                {{ gasoil.price }}{% if not loop.last %},{% endif %}
+                            {% endfor %}
+                        ]
+                    }
+                ]
+            };
+            if (capacity) {
+                __gasoil_capacity_chart__= new LineChart('gasoil-capacity-chart', capacity);
+            }
+            if (price) {
+                __gasoil_price_chart__ = new LineChart('gasoil-price-chart', price);
+            }
+        });
+    </script>
 {% endblock %}

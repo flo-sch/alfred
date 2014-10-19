@@ -7,6 +7,8 @@
 
 {% form_theme form 'FsbAlfredDashboardBundle:Form:bootstrap.html.twig' %}
 
+{% block site_title %}{{ app.user.carName }}{% endblock %}
+
 {% block content %}
     <form action='{{ path('fsb_alfred_dashboard_page_profile') }}' method='post' {{ form_enctype(form) }}>
         {{ form_widget(form) }}

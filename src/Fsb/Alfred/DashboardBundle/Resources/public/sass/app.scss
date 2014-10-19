@@ -1,6 +1,12 @@
 $sidebar-width: 280px;
 $navbar-top-offset: 51px;
-$background: rgb(51, 110, 123);
+
+$color: rgb(34, 49, 63);
+$links-color: rgb(255, 255, 255);
+$background: rgb(37, 116, 169);
+$sidebar-background: rgb(34, 49, 63);
+$navbar-background: rgb(34, 49, 63);
+$navbar-border: rgb(255, 255, 255);
 
 $fa-css-prefix: "icon";
 @import "../bower_components/font-awesome/scss/font-awesome";
@@ -10,8 +16,15 @@ html {
     height: 100%;
     body {
         width: 100%;
-        min-height: 100%;
+        height: 100%;
         padding-top: $navbar-top-offset;
+        a {
+            color: $links-color;
+        }
+        #site-top-navbar {
+            background: $navbar-background;
+            border-color: $navbar-border;
+        }
         #main-container {
             width: 100%;
             height: 100%;
@@ -23,22 +36,29 @@ html {
                 height: 100%;
                 box-sizing: border-box;
                 padding-top: $navbar-top-offset;
+                background: $sidebar-background;
             }
             #site-content-wrapper {
                 position: relative;
                 width: 100%;
-                width: 100%;
-                height: 100%;
+                min-height: 100%;
                 padding: 20px 30px;
                 z-index: 999;
                 transform: translate3d(0, 0, 0);
                 transition: transform 0.33s ease-in;
+                color: $color;
                 background: $background;
+                box-shadow: 0 0 5px rgba(0, 0, 0, 0.65);
                 &.open {
                     transform: translate3d($sidebar-width, 0, 0);
                 }
                 .tab-content {
                     margin: 20px 0 0 0;
+                }
+                table {
+                    .line-infos {
+                        display: none;
+                    }
                 }
             }
         }

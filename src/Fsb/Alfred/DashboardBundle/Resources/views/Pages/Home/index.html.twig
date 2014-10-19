@@ -8,15 +8,15 @@
         <tbody>
             <tr>
                 <th>Consommation moyenne</th>
-                <td>{{ averageConsommation }} L / 100kms</td>
+                <td>{{ averageConsommation|number_format(2, '.', ',') }} L / 100kms</td>
             </tr>
             <tr>
                 <th>Prix moyen du carburant</th>
-                <td>{{ averageLiterPrice }} €</td>
+                <td>{{ averageLiterPrice|number_format(3, '.', ',') }} €</td>
             </tr>
             <tr>
                 <th>Coût moyen (total)</th>
-                <td>{{ averageCost }} € / km</td>
+                <td>{{ averageCost|number_format(2, '.', ',') }} € / km</td>
             </tr>
         </tbody>
     </table>

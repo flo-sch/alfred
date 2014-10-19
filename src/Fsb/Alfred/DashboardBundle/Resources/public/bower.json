@@ -30,7 +30,8 @@
     "jquery-migrate": "~1.2.1",
     "moment": "~2.8.2",
     "mjolnic-bootstrap-colorpicker": "~2.0.0",
-    "fontawesome-iconpicker": "https://github.com/mjolnic/fontawesome-iconpicker/"
+    "fontawesome-iconpicker": "https://github.com/mjolnic/fontawesome-iconpicker/",
+    "chartjs": "~0.2.0"
   },
   "resolutions": {
     "jquery": "~2.1.1",
