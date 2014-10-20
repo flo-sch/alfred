@@ -2191,6 +2191,9 @@ html body #site-top-navbar {
   background: #22313f;
   border-color: white;
 }
+html body #site-top-navbar #logo {
+  margin: 8px 0 7px 20px;
+}
 html body #main-container {
   width: 100%;
   height: 100%;
@@ -2204,6 +2207,12 @@ html body #main-container .sidebar {
   box-sizing: border-box;
   padding-top: 51px;
   background: #22313f;
+}
+html body #main-container .sidebar .top-bordered {
+  border-top: 1px solid white;
+}
+html body #main-container .sidebar .bottom-bordered {
+  border-bottom: 1px solid white;
 }
 html body #main-container #site-content-wrapper {
   position: relative;
@@ -2242,4 +2251,11 @@ html body #main-container #site-content-wrapper table tbody .infos-line.open td 
 }
 html body #main-container #site-content-wrapper table.table-static {
   table-layout: fixed;
+}
+html body #main-container #site-content-wrapper .nav-tabs > li {
+  margin: 0 5px 0 0;
+}
+html body #main-container #site-content-wrapper .nav-tabs > li > a {
+  border-radius: 0;
+  padding: 5px 15px;
 }

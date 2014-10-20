@@ -12,12 +12,12 @@
 {% block pre_wrapper %}
     <aside class='sidebar' role='navigation'>
         <ul class='nav' id='sidebar-nav'>
-            <li><a href='{{ path('fsb_alfred_dashboard_homepage') }}'><span class='icon icon-pie-chart'></span> Statistiques</a></li>
+            <li class='bottom-bordered'><a href='{{ path('fsb_alfred_dashboard_homepage') }}'><span class='icon icon-pie-chart'></span> Statistiques</a></li>
             <li><a href='{{ path('fsb_alfred_dashboard_page_gasoil') }}'><span class='icon icon-credit-card'></span> Carburant</a></li>
             <li><a href='{{ path('fsb_alfred_dashboard_page_reparation') }}'><span class='icon icon-wrench'></span> Réparations</a></li>
             <li><a href='{{ path('fsb_alfred_dashboard_page_highway') }}'><span class='icon icon-money'></span> Trajets</a></li>
             <li><a href='{{ path('fsb_alfred_dashboard_page_insurance_fee') }}'><span class='icon icon-archive'></span> Assurance</a></li>
-            <li><a href='{{ path('fsb_alfred_dashboard_page_profile') }}'><span class='icon icon-user'></span> Profil</a></li>
+            <li class='top-bordered bottom-bordered'><a href='{{ path('fsb_alfred_dashboard_page_profile') }}'><span class='icon icon-user'></span> Profil</a></li>
         </ul>
     </aside>
 {% endblock %}

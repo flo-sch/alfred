@@ -24,6 +24,9 @@ html {
         #site-top-navbar {
             background: $navbar-background;
             border-color: $navbar-border;
+            #logo {
+                margin: 8px 0 7px 20px;
+            }
         }
         #main-container {
             width: 100%;
@@ -37,6 +40,12 @@ html {
                 box-sizing: border-box;
                 padding-top: $navbar-top-offset;
                 background: $sidebar-background;
+                .top-bordered {
+                    border-top: 1px solid $links-color;
+                }
+                .bottom-bordered {
+                    border-bottom: 1px solid $links-color;
+                }
             }
             #site-content-wrapper {
                 position: relative;
@@ -83,6 +92,15 @@ html {
                     }
                     &.table-static {
                         table-layout: fixed;
+                    }
+                }
+                .nav-tabs {
+                    > li {
+                        margin: 0 5px 0 0;
+                        > a {
+                            border-radius: 0;
+                            padding: 5px 15px;
+                        }
                     }
                 }
             }
