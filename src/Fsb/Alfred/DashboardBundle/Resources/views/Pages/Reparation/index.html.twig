@@ -12,7 +12,7 @@
     </ul>
     <div class='tab-content'>
         <div class='tab-pane active table-responsive' id='list'>
-            <h4>Liste des pleins d'essence{% if reparations %} <span class='pull-right'><a id='toggle-infos-lines-button' href='#'><span class='icon icon-plus-circle icon-lg'></span></a></span>{% endif %}</h4>
+            <h4>Liste des réparations{% if reparations %} <span class='pull-right'><a id='toggle-infos-lines-button' href='#'><span class='icon icon-plus-circle icon-lg'></span></a></span>{% endif %}</h4>
             <table class='table table-hover table-condensed table-bordered table-static'>
                 <thead>
                     <tr>
@@ -62,7 +62,7 @@
             </table>
         </div>
         <div class='tab-pane' id='form'>
-            <h4>Renseigner un plein d'essence</h4>
+            <h4>Renseigner une réparation</h4>
             <form action='{{ path('fsb_alfred_dashboard_page_reparation_create') }}' method='post' {{ form_enctype(form) }}>
                 <fieldset>
                     <div class='row'>
@@ -119,9 +119,6 @@
             <h4>Statistiques</h4>
             <hr />
             <canvas id='reparation-chart' class='chart' width='640' height='420'></canvas>
-            {#
-            <h5>Consommation moyenne : {{ (100 * (totalCapacity - reparations|last.capacity) / (reparations|last.kilometers - reparations|first.kilometers))|number_format(2, '.', ' ') }} L / 100 kms</h5>
-            #}
         </div>
     </div>
 {% endblock %}
@@ -143,7 +140,7 @@
             });
         });
     </script>
-    {% if reparations %}
+    {% if reparations|length > 1 %}
         <script src='{{ asset('bundles/fsbalfreddashboard/js/vendor/chart.js') }}'></script>
         <script>
             $(function () {

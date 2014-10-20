@@ -61,9 +61,7 @@
             <h4>Statistiques</h4>
             <hr />
             <canvas id='insurance-fee-chart' class='chart' width='640' height='420'></canvas>
-            {#
-            <h5>Prix moyen : {{ (100 * (totalCapacity - insuranceFees|last.capacity) / (insuranceFees|last.kilometers - insuranceFees|first.kilometers))|number_format(2, '.', ' ') }} L / 100 kms</h5>
-            #}
+            <h5>Prix moyen : {{ totalPrice / insuranceFees|length }} €</h5>
         </div>
     </div>
 {% endblock %}
@@ -71,7 +69,7 @@
 {% block javascripts %}
     {{ parent() }}
     <script src='{{ asset('bundles/fsbalfreddashboard/js/vendor/underscore-1.6.0.min.js') }}'></script>
-    {% if insuranceFees %}
+    {% if insuranceFees|length > 1 %}
         <script src='{{ asset('bundles/fsbalfreddashboard/js/vendor/chart.js') }}'></script>
         <script>
             $(function () {

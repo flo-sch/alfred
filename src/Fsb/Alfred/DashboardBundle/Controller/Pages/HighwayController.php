@@ -21,9 +21,7 @@ class HighwayController extends FrontController
         return $this->render('FsbAlfredDashboardBundle:Pages/Highway:index.html.twig', array(
             'highways' => $highways,
             'form' => $form->createView(),
-            'totalPrice' => $em->getRepository('FsbAlfredCoreBundle:Highway')->getTotalPrice(),
-            'totalCapacity' => $em->getRepository('FsbAlfredCoreBundle:Highway')->getTotalCapacity(),
-            'totalAmount' => $em->getRepository('FsbAlfredCoreBundle:Highway')->getTotalAmount()
+            'totalPrice' => $em->getRepository('FsbAlfredCoreBundle:Highway')->getTotalPrice()
         ));
     }
 

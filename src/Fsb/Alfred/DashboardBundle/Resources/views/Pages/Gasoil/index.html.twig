@@ -145,7 +145,7 @@
             });
         });
     </script>
-    {% if gasoils %}
+    {% if gasoils|length > 1 %}
         <script src='{{ asset('bundles/fsbalfreddashboard/js/vendor/chart.js') }}'></script>
         <script>
             $(function () {

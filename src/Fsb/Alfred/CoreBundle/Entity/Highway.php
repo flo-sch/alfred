@@ -62,7 +62,7 @@ class Highway
     /**
      * @var string
      *
-     * @ORM\Column(name="price", type="decimal")
+     * @ORM\Column(name="price", type="decimal", precision=9, scale=5)
      */
     private $price;
 
