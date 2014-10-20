@@ -18,8 +18,8 @@
                     <tr>
                         <th>Date</th>
                         <th>Kms</th>
-                        <th>Prix</th>
                         <th>Objet</th>
+                        <th>Prix</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -29,7 +29,7 @@
                                 <td>{{ reparation.createdAt|date('d-m-Y') }}</td>
                                 <td>{{ reparation.kilometers }} kms</td>
                                 <td>{{ reparation.object }}</td>
-                                <td>{{ reparation.price|number_format(3, '.', ',') }} € / L</td>
+                                <td>{{ reparation.price|number_format(2, '.', ',') }} €</td>
                             </tr>
                             {% if loop.index > 1 %}
                                 {% set price = reparation.price - reparations[loop.index0 - 1].price %}
@@ -45,11 +45,9 @@
                             <td>Total</td>
                             {% if reparations|length > 1 %}
                                 <td colspan='2'>{{ reparations|last.kilometers - reparations|first.kilometers }} kms</td>
-                                <td>{{ totalCapacity|number_format(2, '.', ',') }} L</td>
                                 <td>{{ totalAmount|number_format(2, '.', ',') }} €</td>
                             {% else %}
                                 <td colspan='2'></td>
-                                <td>{{ totalCapacity|number_format(2, '.', ',') }} L</td>
                                 <td>{{ totalAmount|number_format(2, '.', ',') }} €</td>
                             {% endif %}
                         </tr>

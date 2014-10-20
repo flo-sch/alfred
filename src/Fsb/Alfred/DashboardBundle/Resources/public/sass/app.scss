@@ -8,8 +8,23 @@ $sidebar-background: rgb(34, 49, 63);
 $navbar-background: rgb(34, 49, 63);
 $navbar-border: rgb(255, 255, 255);
 
-$fa-css-prefix: "icon";
-@import "../bower_components/font-awesome/scss/font-awesome";
+@keyframes turns {
+    0% {
+        transform: rotateZ(0deg);
+    }
+    25% {
+        transform: rotateZ(-40deg);
+    }
+    50% {
+        transform: rotateZ(0deg);
+    }
+    75% {
+        transform: rotateZ(40deg);
+    }
+    100% {
+        transform: rotateZ(0deg);
+    }
+}
 
 html {
     width: 100%;
@@ -26,6 +41,7 @@ html {
             border-color: $navbar-border;
             #logo {
                 margin: 8px 0 7px 20px;
+                animation: turns 4s ease-in 0 infinite;
             }
         }
         #main-container {
@@ -103,7 +119,13 @@ html {
                         }
                     }
                 }
+                .chart {
+                    cursor: pointer;
+                }
             }
         }
     }
 }
+
+$fa-css-prefix: "icon";
+@import "../bower_components/font-awesome/scss/font-awesome";

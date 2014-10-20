@@ -16,7 +16,7 @@ class ReparationType extends AbstractType
     {
         $builder
             ->add('object', 'text', array('label' => 'Objet', 'required' => true, 'attr' => array('placeholder' => 'Moteur')))
-            ->add('price', 'number', array('label' => 'Prix au litre', 'required' => true, 'attr' => array('placeholder' => '500.00')))
+            ->add('price', 'number', array('label' => 'Prix', 'required' => true, 'attr' => array('placeholder' => '500.00')))
             ->add('kilometers', 'integer', array('label' => 'Kilométrage', 'required' => false))
             ->add('company', 'text', array('label' => 'Compagnie', 'required' => false))
             ->add('place', 'text', array('label' => 'Lieu', 'required' => false))

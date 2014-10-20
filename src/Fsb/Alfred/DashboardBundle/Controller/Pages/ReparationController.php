@@ -18,9 +18,12 @@ class ReparationController extends FrontController
 
         $reparations = $em->getRepository('FsbAlfredCoreBundle:Reparation')->findAll();
 
+        $totalAmount = $em->getRepository('FsbAlfredCoreBundle:Reparation')->getTotalPrice();
+
         return $this->render('FsbAlfredDashboardBundle:Pages/Reparation:index.html.twig', array(
             'reparations' => $reparations,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'totalAmount' => $totalAmount
         ));
     }
 

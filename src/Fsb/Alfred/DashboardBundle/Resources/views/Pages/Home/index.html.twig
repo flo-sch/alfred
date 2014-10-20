@@ -3,21 +3,70 @@
 {% block site_title %}{{ app.user.carName }}{% endblock %}
 
 {% block content %}
-    <h4>Statistiques moyennes</h4>
-    <table class='table table-bordered table-hover'>
-        <tbody>
-            <tr>
-                <th>Consommation moyenne</th>
-                <td>{{ averageConsommation|number_format(2, '.', ',') }} L / 100kms</td>
-            </tr>
-            <tr>
-                <th>Prix moyen du carburant</th>
-                <td>{{ averageLiterPrice|number_format(3, '.', ',') }} €</td>
-            </tr>
-            <tr>
-                <th>Coût moyen (total)</th>
-                <td>{{ averageCost|number_format(2, '.', ',') }} € / km</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class='row'>
+        <div class='col-lg-9 col-md-8 col-sm-6 col-xs-12'>
+            <h4>Statistiques moyennes</h4>
+            <div class='table-responsive'>
+                <table class='table table-bordered table-hover'>
+                    <tbody>
+                        <tr>
+                            <th>Consommation moyenne</th>
+                            <td>{{ averageConsommation|number_format(2, '.', ',') }} L / 100kms</td>
+                        </tr>
+                        <tr>
+                            <th>Prix moyen du carburant</th>
+                            <td>{{ averageLiterPrice|number_format(3, '.', ',') }} €</td>
+                        </tr>
+                        <tr>
+                            <th>Coût moyen (total)</th>
+                            <td>{{ averageCost|number_format(2, '.', ',') }} € / km</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class='col-lg-3 col-md-4 col-sm-6 col-xs-12'>
+            <h4>Budget</h4>
+            <canvas id='global-chart' class='chart' width='400' height='400'></canvas>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src='{{ asset('bundles/fsbalfreddashboard/js/vendor/chart.js') }}'></script>
+    <script>
+        $(function () {
+            var context = $('#global-chart').get(0).getContext('2d'),
+                globalChart = new Chart(context).Pie([{
+                    value: {{ gasoilTotalCost|number_format(2, '.', ',') }},
+                    color: 'rgba(34, 49, 63, 0.15)',
+                    highlight: 'rgba(34, 49, 63, 0.85)',
+                    label: 'Gasoil'
+                }, {
+                    value: {{ highwayTotalCost|number_format(2, '.', ',') }},
+                    color: 'rgba(34, 49, 63, 0.15)',
+                    highlight: 'rgba(34, 49, 63, 0.85)',
+                    label: 'Highways'
+                }, {
+                    value: {{ reparationsTotalCost|number_format(2, '.', ',') }},
+                    color: 'rgba(34, 49, 63, 0.15)',
+                    highlight: 'rgba(34, 49, 63, 0.85)',
+                    label: 'Réparations'
+                }, {
+                    value: {{ insuranceFeesTotalCost|number_format(2, '.', ',') }},
+                    color: 'rgba(34, 49, 63, 0.15)',
+                    highlight: 'rgba(34, 49, 63, 0.85)',
+                    label: 'Insurance Fees'
+                }], {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    showTooltips: false,
+                    // tooltipFillColor: 'rgba(0, 0, 0, 0.95)',
+                    // tooltipTemplate: {% raw %}'<%if (label){%><%=label%>: <%}%><%= value %>€'{% endraw %},
+                    // tooltipEvents: ['mousemove', 'mousedown', 'touchstart', 'touchmove'],
+                    animationEasing: 'easeOutCirc'
+                });
+        });
+    </script>
 {% endblock %}

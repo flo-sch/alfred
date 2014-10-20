@@ -1,3 +1,149 @@
+@-webkit-keyframes turns {
+  0% {
+    -webkit-transform: rotateZ(0deg);
+            transform: rotateZ(0deg);
+  }
+
+  25% {
+    -webkit-transform: rotateZ(-40deg);
+            transform: rotateZ(-40deg);
+  }
+
+  50% {
+    -webkit-transform: rotateZ(0deg);
+            transform: rotateZ(0deg);
+  }
+
+  75% {
+    -webkit-transform: rotateZ(40deg);
+            transform: rotateZ(40deg);
+  }
+
+  100% {
+    -webkit-transform: rotateZ(0deg);
+            transform: rotateZ(0deg);
+  }
+}
+@keyframes turns {
+  0% {
+    -webkit-transform: rotateZ(0deg);
+            transform: rotateZ(0deg);
+  }
+
+  25% {
+    -webkit-transform: rotateZ(-40deg);
+            transform: rotateZ(-40deg);
+  }
+
+  50% {
+    -webkit-transform: rotateZ(0deg);
+            transform: rotateZ(0deg);
+  }
+
+  75% {
+    -webkit-transform: rotateZ(40deg);
+            transform: rotateZ(40deg);
+  }
+
+  100% {
+    -webkit-transform: rotateZ(0deg);
+            transform: rotateZ(0deg);
+  }
+}
+html {
+  width: 100%;
+  height: 100%;
+}
+html body {
+  width: 100%;
+  height: 100%;
+  padding-top: 51px;
+}
+html body a {
+  color: white;
+}
+html body #site-top-navbar {
+  background: #22313f;
+  border-color: white;
+}
+html body #site-top-navbar #logo {
+  margin: 8px 0 7px 20px;
+  -webkit-animation: turns 4s ease-in 0 infinite;
+          animation: turns 4s ease-in 0 infinite;
+}
+html body #main-container {
+  width: 100%;
+  height: 100%;
+}
+html body #main-container .sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 280px;
+  height: 100%;
+  box-sizing: border-box;
+  padding-top: 51px;
+  background: #22313f;
+}
+html body #main-container .sidebar .top-bordered {
+  border-top: 1px solid white;
+}
+html body #main-container .sidebar .bottom-bordered {
+  border-bottom: 1px solid white;
+}
+html body #main-container #site-content-wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 100%;
+  padding: 20px 30px;
+  z-index: 999;
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
+  -webkit-transition: -webkit-transform 0.33s ease-in;
+          transition: transform 0.33s ease-in;
+  color: #22313f;
+  background: #336e7b;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.65);
+}
+html body #main-container #site-content-wrapper.open {
+  -webkit-transform: translate3d(280px, 0, 0);
+          transform: translate3d(280px, 0, 0);
+}
+html body #main-container #site-content-wrapper .tab-content {
+  margin: 20px 0 0 0;
+}
+html body #main-container #site-content-wrapper table tbody .infos-line td {
+  padding: 0;
+  border-top: 0;
+  border-bottom: 0;
+}
+html body #main-container #site-content-wrapper table tbody .infos-line td div {
+  height: 0;
+  padding: 0;
+  opacity: 0;
+  overflow: hidden;
+  -webkit-transition: all 0.33s linear;
+          transition: all 0.33s linear;
+}
+html body #main-container #site-content-wrapper table tbody .infos-line.open td div {
+  height: 30px;
+  padding: 5px;
+  opacity: 1;
+}
+html body #main-container #site-content-wrapper table.table-static {
+  table-layout: fixed;
+}
+html body #main-container #site-content-wrapper .nav-tabs > li {
+  margin: 0 5px 0 0;
+}
+html body #main-container #site-content-wrapper .nav-tabs > li > a {
+  border-radius: 0;
+  padding: 5px 15px;
+}
+html body #main-container #site-content-wrapper .chart {
+  cursor: pointer;
+}
+
 /*!
  *  Font Awesome 4.2.0 by @davegandy - http://fontawesome.io - @fontawesome
  *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
@@ -156,7 +302,8 @@
 :root .icon-rotate-270,
 :root .icon-flip-horizontal,
 :root .icon-flip-vertical {
-  filter: none;
+  -webkit-filter: none;
+          filter: none;
 }
 
 .icon-stack {
@@ -2173,89 +2320,4 @@
 
 .icon-meanpath:before {
   content: "\f20c";
-}
-
-html {
-  width: 100%;
-  height: 100%;
-}
-html body {
-  width: 100%;
-  height: 100%;
-  padding-top: 51px;
-}
-html body a {
-  color: white;
-}
-html body #site-top-navbar {
-  background: #22313f;
-  border-color: white;
-}
-html body #site-top-navbar #logo {
-  margin: 8px 0 7px 20px;
-}
-html body #main-container {
-  width: 100%;
-  height: 100%;
-}
-html body #main-container .sidebar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 280px;
-  height: 100%;
-  box-sizing: border-box;
-  padding-top: 51px;
-  background: #22313f;
-}
-html body #main-container .sidebar .top-bordered {
-  border-top: 1px solid white;
-}
-html body #main-container .sidebar .bottom-bordered {
-  border-bottom: 1px solid white;
-}
-html body #main-container #site-content-wrapper {
-  position: relative;
-  width: 100%;
-  min-height: 100%;
-  padding: 20px 30px;
-  z-index: 999;
-  transform: translate3d(0, 0, 0);
-  transition: transform 0.33s ease-in;
-  color: #22313f;
-  background: #336e7b;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.65);
-}
-html body #main-container #site-content-wrapper.open {
-  transform: translate3d(280px, 0, 0);
-}
-html body #main-container #site-content-wrapper .tab-content {
-  margin: 20px 0 0 0;
-}
-html body #main-container #site-content-wrapper table tbody .infos-line td {
-  padding: 0;
-  border-top: 0;
-  border-bottom: 0;
-}
-html body #main-container #site-content-wrapper table tbody .infos-line td div {
-  height: 0;
-  padding: 0;
-  opacity: 0;
-  overflow: hidden;
-  transition: all 0.33s linear;
-}
-html body #main-container #site-content-wrapper table tbody .infos-line.open td div {
-  height: 30px;
-  padding: 5px;
-  opacity: 1;
-}
-html body #main-container #site-content-wrapper table.table-static {
-  table-layout: fixed;
-}
-html body #main-container #site-content-wrapper .nav-tabs > li {
-  margin: 0 5px 0 0;
-}
-html body #main-container #site-content-wrapper .nav-tabs > li > a {
-  border-radius: 0;
-  padding: 5px 15px;
 }

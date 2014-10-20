@@ -54,8 +54,8 @@ gulp.task('styles', function () {
       trace: true
     }))
     .on('error', gutil.log)
-    .pipe(gulp.dest(__folders.dest.styles))
     .pipe(autoprefixer('last 2 version', 'ie 8', 'ie 9'))
+    .pipe(gulp.dest(__folders.dest.styles))
     .on('error', gutil.log)
     .pipe(size())
     .pipe(minifycss())

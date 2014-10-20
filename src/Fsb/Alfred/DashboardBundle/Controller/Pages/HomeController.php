@@ -24,7 +24,11 @@ class HomeController extends FrontController
         return $this->render('FsbAlfredDashboardBundle:Pages/Home:index.html.twig', array(
             'averageConsommation' => $averageConsommation,
             'averageLiterPrice' => $averageGasoilPrice,
-            'averageCost' => $averagePrice
+            'averageCost' => $averagePrice,
+            'gasoilTotalCost' => $gasoilTotalPrice,
+            'highwayTotalCost' => $highwaysTotalPrice,
+            'reparationsTotalCost' => $reparationsTotalPrice,
+            'insuranceFeesTotalCost' => $insuranceTotalPrice
         ));
     }
 }
