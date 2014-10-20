@@ -8,20 +8,20 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class ReparationType extends AbstractType
 {
-        /**
+    /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('capacity', 'integer', array('label' => 'Capacité en litres', 'required' => false))
-            ->add('price', 'decimal', array('label' => 'Prix au litre', 'required' => false))
+            ->add('object', 'text', array('label' => 'Objet', 'required' => true, 'attr' => array('placeholder' => 'Moteur')))
+            ->add('price', 'number', array('label' => 'Prix au litre', 'required' => true, 'attr' => array('placeholder' => '500.00')))
             ->add('kilometers', 'integer', array('label' => 'Kilométrage', 'required' => false))
             ->add('company', 'text', array('label' => 'Compagnie', 'required' => false))
             ->add('place', 'text', array('label' => 'Lieu', 'required' => false))
-            ->add('latitude', 'decimal', array('label' => 'Latitude', 'required' => false))
-            ->add('longitude', 'decimal', array('label' => 'Longitude', 'required' => false))
+            ->add('latitude', 'number', array('label' => 'Latitude', 'required' => false))
+            ->add('longitude', 'number', array('label' => 'Longitude', 'required' => false))
         ;
     }
 
@@ -31,7 +31,7 @@ class ReparationType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Fsb\Alfred\CoreBundle\Entity\Gasoil'
+            'data_class' => 'Fsb\Alfred\CoreBundle\Entity\Reparation'
         ));
     }
 
@@ -40,6 +40,7 @@ class ReparationType extends AbstractType
      */
     public function getName()
     {
-        return 'fsb_alfred_dashboard_gasoil_type';
+        return 'fsb_alfred_dashboard_reparation_type';
     }
 }
+

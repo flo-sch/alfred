@@ -27,7 +27,7 @@ class GasoilController extends FrontController
         ));
     }
 
-    public function editAction()
+    public function newAction()
     {
         $gasoil = new Gasoil();
         $form = $this->createForm(new GasoilType(), $gasoil);

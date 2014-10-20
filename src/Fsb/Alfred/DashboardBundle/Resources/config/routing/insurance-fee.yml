@@ -1,0 +1,20 @@
+fsb_alfred_dashboard_page_insurance_fee:
+    path:     /
+    defaults:
+        _controller: FsbAlfredDashboardBundle:Pages/InsuranceFee:index
+    requirements:
+        _method: get
+
+fsb_alfred_dashboard_page_insurance_fee_new:
+    path:     /new
+    defaults:
+        _controller: FsbAlfredDashboardBundle:Pages/InsuranceFee:new
+    requirements:
+        _method: get
+
+fsb_alfred_dashboard_page_insurance_fee_create:
+    path:     /create
+    defaults:
+        _controller: FsbAlfredDashboardBundle:Pages/InsuranceFee:create
+    requirements:
+        _method: post

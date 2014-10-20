@@ -2,7 +2,7 @@
 
 {% form_theme form 'FsbAlfredDashboardBundle:Form:bootstrap.html.twig' %}
 
-{% block site_title %}{{ app.user.carName }} - Carburant{% endblock %}
+{% block site_title %}{{ app.user.carName }} - Réparations{% endblock %}
 
 {% block content %}
     <ul class='nav nav-tabs'>
@@ -12,43 +12,39 @@
     </ul>
     <div class='tab-content'>
         <div class='tab-pane active table-responsive' id='list'>
-            <h4>Liste des pleins d'essence{% if gasoils %} <span class='pull-right'><a id='toggle-infos-lines-button' href='#'><span class='icon icon-plus-circle icon-lg'></span></a></span>{% endif %}</h4>
+            <h4>Liste des pleins d'essence{% if reparations %} <span class='pull-right'><a id='toggle-infos-lines-button' href='#'><span class='icon icon-plus-circle icon-lg'></span></a></span>{% endif %}</h4>
             <table class='table table-hover table-condensed table-bordered table-static'>
                 <thead>
                     <tr>
                         <th>Date</th>
                         <th>Kms</th>
                         <th>Prix</th>
-                        <th>Capacité</th>
-                        <th>Montant</th>
+                        <th>Objet</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% if gasoils %}
-                        {% for gasoil in gasoils %}
+                    {% if reparations %}
+                        {% for reparation in reparations %}
                             <tr>
-                                <td>{{ gasoil.createdAt|date('d-m-Y') }}</td>
-                                <td>{{ gasoil.kilometers }} kms</td>
-                                <td>{{ gasoil.price|number_format(3, '.', ',') }} € / L</td>
-                                <td>{{ gasoil.capacity|number_format(2, '.', ',') }} L</td>
-                                <td>{{ gasoil.amount|number_format(2, '.', ',') }} €</td>
+                                <td>{{ reparation.createdAt|date('d-m-Y') }}</td>
+                                <td>{{ reparation.kilometers }} kms</td>
+                                <td>{{ reparation.object }}</td>
+                                <td>{{ reparation.price|number_format(3, '.', ',') }} € / L</td>
                             </tr>
                             {% if loop.index > 1 %}
-                                {% set price = gasoil.price - gasoils[loop.index0 - 1].price %}
-                                {% set amount = gasoil.amount - gasoils[loop.index0 - 1].amount %}
+                                {% set price = reparation.price - reparations[loop.index0 - 1].price %}
+                                {% set amount = reparation.amount - reparations[loop.index0 - 1].amount %}
                                 <tr class='infos-line {% if price > 0 %}danger{% else %}success{% endif %}'>
-                                    <td><div>Infos</div></td>
-                                    <td><div>+{{ gasoil.kilometers - gasoils[loop.index0 - 1].kilometers }} kms</div></td>
-                                    <td><div>{% if price > 0 %}+{% endif %}{{ (gasoil.price - gasoils[loop.index0 - 1].price)|number_format(3, '.', ',') }} € / L</div></td>
-                                    <td><div>{{ (gasoil.capacity - gasoils[loop.index0 - 1].capacity)|number_format(2, '.', ',') }} L</div></td>
-                                    <td><div>{% if amount > 0 %}+{% endif %}{{ (gasoil.amount - gasoils[loop.index0 - 1].amount)|number_format(2, '.', ',') }} €</div></td>
+                                    <td colspan='2'><div>Infos</div></td>
+                                    <td>{{ reparation.object }}</td>
+                                    <td><div>{{ (reparation.price - reparations[loop.index0 - 1].price)|number_format(2, '.', ',') }} L</div></td>
                                 </tr>
                             {% endif %}
                         {% endfor %}
                         <tr class='total info'>
                             <td>Total</td>
-                            {% if gasoils|length > 1 %}
-                                <td colspan='2'>{{ gasoils|last.kilometers - gasoils|first.kilometers }} kms</td>
+                            {% if reparations|length > 1 %}
+                                <td colspan='2'>{{ reparations|last.kilometers - reparations|first.kilometers }} kms</td>
                                 <td>{{ totalCapacity|number_format(2, '.', ',') }} L</td>
                                 <td>{{ totalAmount|number_format(2, '.', ',') }} €</td>
                             {% else %}
@@ -59,7 +55,7 @@
                         </tr>
                     {% else %}
                         <tr class='active'>
-                            <td colspan='5'>Aucun plein pour le moment</td>
+                            <td colspan='4'>Aucune réparation pour le moment</td>
                         </tr>
                     {% endif %}
                 </tbody>
@@ -67,11 +63,11 @@
         </div>
         <div class='tab-pane' id='form'>
             <h4>Renseigner un plein d'essence</h4>
-            <form action='{{ path('fsb_alfred_dashboard_page_gasoil_create') }}' method='post' {{ form_enctype(form) }}>
+            <form action='{{ path('fsb_alfred_dashboard_page_reparation_create') }}' method='post' {{ form_enctype(form) }}>
                 <fieldset>
                     <div class='row'>
                         <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12'>
-                            {{ form_row(form.capacity) }}
+                            {{ form_row(form.object) }}
                         </div>
                         <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12'>
                             {{ form_row(form.price) }}
@@ -122,8 +118,10 @@
         <div class='tab-pane' id='statistiques'>
             <h4>Statistiques</h4>
             <hr />
-            <canvas id='gasoil-chart' class='chart' width='640' height='420'></canvas>
-            <h5>Consommation moyenne : {{ (100 * (totalCapacity - gasoils|last.capacity) / (gasoils|last.kilometers - gasoils|first.kilometers))|number_format(2, '.', ' ') }} L / 100 kms</h5>
+            <canvas id='reparation-chart' class='chart' width='640' height='420'></canvas>
+            {#
+            <h5>Consommation moyenne : {{ (100 * (totalCapacity - reparations|last.capacity) / (reparations|last.kilometers - reparations|first.kilometers))|number_format(2, '.', ' ') }} L / 100 kms</h5>
+            #}
         </div>
     </div>
 {% endblock %}
@@ -139,21 +137,21 @@
                 $(this).find('.icon').toggleClass('icon-plus-circle icon-minus-circle');
             });
             var localisedForm = new LocalisedForm(function (position) {
-                $('#fsb_alfred_dashboard_gasoil_type_latitude').val(position.coords.latitude).prop('readonly', true);
-                $('#fsb_alfred_dashboard_gasoil_type_longitude').val(position.coords.longitude).prop('readonly', true);
+                $('#fsb_alfred_dashboard_reparation_type_latitude').val(position.coords.latitude).prop('readonly', true);
+                $('#fsb_alfred_dashboard_reparation_type_longitude').val(position.coords.longitude).prop('readonly', true);
                 $('#coordinates-row').find('.icon-spin').removeClass('icon-spin icon-spinner').addClass('icon-check');
             });
         });
     </script>
-    {% if gasoils %}
+    {% if reparations %}
         <script src='{{ asset('bundles/fsbalfreddashboard/js/vendor/chart.js') }}'></script>
         <script>
             $(function () {
-                var context = $('#gasoil-chart').get(0).getContext('2d'),
-                    gasoilChart = new Chart(context).Line({
+                var context = $('#reparation-chart').get(0).getContext('2d'),
+                    reparationChart = new Chart(context).Line({
                         'labels': [
-                            {% for gasoil in gasoils %}
-                                '{{ gasoil.createdAt|date('d-m-Y') }}'{% if not loop.last %},{% endif %}
+                            {% for reparation in reparations %}
+                                '{{ reparation.createdAt|date('d-m-Y') }}'{% if not loop.last %},{% endif %}
                             {% endfor %}
                         ],
                         'datasets': [
@@ -166,7 +164,7 @@
                                 'pointHighlightFill': 'rgb(0, 0, 0)',
                                 'pointHighlightStroke': 'rgba(220,220,220,1)',
                                 'data': [
-                                    {% for gasoil in gasoils %}{{ gasoil.amount }}{% if not loop.last %},{% endif %}{% endfor %}
+                                    {% for reparation in reparations %}{{ reparation.amount }}{% if not loop.last %},{% endif %}{% endfor %}
                                 ]
                             }
                         ]

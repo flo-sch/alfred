@@ -55,42 +55,7 @@ class Reparation
     /**
      * @var string
      *
-     * @ORM\Column(name="place", type="string", length=255)
-     */
-    private $place;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="latitude", type="string", length=255)
-     */
-    private $latitude;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="longitude", type="decimal")
-     */
-    private $longitude;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="company", type="string", length=255)
-     */
-    private $company;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="kilometers", type="integer")
-     */
-    private $kilometers;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="object", type="string", length=255)
+     * @ORM\Column(name="object", type="string", length=255, nullable=true)
      */
     private $object;
 
@@ -100,6 +65,41 @@ class Reparation
      * @ORM\Column(name="price", type="decimal", precision=9, scale=5)
      */
     private $price;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="kilometers", type="integer", nullable=true)
+     */
+    private $kilometers;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="company", type="string", length=255, nullable=true)
+     */
+    private $company;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="place", type="string", length=255)
+     */
+    private $place;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="latitude", type="decimal", precision=9, scale=5, nullable=true)
+     */
+    private $latitude;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="longitude", type="decimal", precision=9, scale=5, nullable=true)
+     */
+    private $longitude;
 
     /**
      * Public constructor
@@ -240,6 +240,98 @@ class Reparation
     }
 
     /**
+     * Set object
+     *
+     * @param string $object
+     * @return Reparation
+     */
+    public function setObject($object)
+    {
+        $this->object = $object;
+
+        return $this;
+    }
+
+    /**
+     * Get object
+     *
+     * @return string
+     */
+    public function getObject()
+    {
+        return $this->object;
+    }
+
+    /**
+     * Set price
+     *
+     * @param float $price
+     * @return Reparation
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * Get price
+     *
+     * @return float
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    /**
+     * Set kilometers
+     *
+     * @param integer $kilometers
+     * @return Reparation
+     */
+    public function setKilometers($kilometers)
+    {
+        $this->kilometers = $kilometers;
+
+        return $this;
+    }
+
+    /**
+     * Get kilometers
+     *
+     * @return integer
+     */
+    public function getKilometers()
+    {
+        return $this->kilometers;
+    }
+
+    /**
+     * Set company
+     *
+     * @param string $company
+     * @return Reparation
+     */
+    public function setCompany($company)
+    {
+        $this->company = $company;
+
+        return $this;
+    }
+
+    /**
+     * Get company
+     *
+     * @return string
+     */
+    public function getCompany()
+    {
+        return $this->company;
+    }
+
+    /**
      * Set place
      *
      * @param string $place
@@ -306,97 +398,5 @@ class Reparation
     public function getLongitude()
     {
         return $this->longitude;
-    }
-
-    /**
-     * Set company
-     *
-     * @param string $company
-     * @return Reparation
-     */
-    public function setCompany($company)
-    {
-        $this->company = $company;
-
-        return $this;
-    }
-
-    /**
-     * Get company
-     *
-     * @return string
-     */
-    public function getCompany()
-    {
-        return $this->company;
-    }
-
-    /**
-     * Set kilometers
-     *
-     * @param integer $kilometers
-     * @return Reparation
-     */
-    public function setKilometers($kilometers)
-    {
-        $this->kilometers = $kilometers;
-
-        return $this;
-    }
-
-    /**
-     * Get kilometers
-     *
-     * @return integer
-     */
-    public function getKilometers()
-    {
-        return $this->kilometers;
-    }
-
-    /**
-     * Set object
-     *
-     * @param string $object
-     * @return Reparation
-     */
-    public function setObject($object)
-    {
-        $this->object = $object;
-
-        return $this;
-    }
-
-    /**
-     * Get object
-     *
-     * @return string
-     */
-    public function getObject()
-    {
-        return $this->object;
-    }
-
-    /**
-     * Set price
-     *
-     * @param float $price
-     * @return Reparation
-     */
-    public function setPrice($price)
-    {
-        $this->price = $price;
-
-        return $this;
-    }
-
-    /**
-     * Get price
-     *
-     * @return float
-     */
-    public function getPrice()
-    {
-        return $this->price;
     }
 }

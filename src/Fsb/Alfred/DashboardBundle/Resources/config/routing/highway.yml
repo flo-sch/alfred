@@ -1,0 +1,20 @@
+fsb_alfred_dashboard_page_highway:
+    path:     /
+    defaults:
+        _controller: FsbAlfredDashboardBundle:Pages/Highway:index
+    requirements:
+        _method: get
+
+fsb_alfred_dashboard_page_highway_new:
+    path:     /new
+    defaults:
+        _controller: FsbAlfredDashboardBundle:Pages/Highway:new
+    requirements:
+        _method: get
+
+fsb_alfred_dashboard_page_highway_create:
+    path:     /create
+    defaults:
+        _controller: FsbAlfredDashboardBundle:Pages/Highway:create
+    requirements:
+        _method: post

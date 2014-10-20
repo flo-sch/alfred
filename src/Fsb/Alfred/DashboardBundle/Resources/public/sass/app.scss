@@ -56,8 +56,33 @@ html {
                     margin: 20px 0 0 0;
                 }
                 table {
-                    .line-infos {
-                        display: none;
+                    tbody {
+                        .infos-line {
+                            td {
+                                padding: 0;
+                                border-top: 0;
+                                border-bottom: 0;
+                                div {
+                                    height: 0;
+                                    padding: 0;
+                                    opacity: 0;
+                                    overflow: hidden;
+                                    transition: all 0.33s linear;
+                                }
+                            }
+                            &.open {
+                                td {
+                                    div {
+                                        height: 30px;
+                                        padding: 5px;
+                                        opacity: 1;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    &.table-static {
+                        table-layout: fixed;
                     }
                 }
             }

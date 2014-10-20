@@ -39,3 +39,15 @@ fsb_alfred_dashboard_page_logout:
 fsb_alfred_dashboard_gasoil:
     resource: "@FsbAlfredDashboardBundle/Resources/config/routing/gasoil.yml"
     prefix:   /gasoil
+
+fsb_alfred_dashboard_highway:
+    resource: "@FsbAlfredDashboardBundle/Resources/config/routing/highway.yml"
+    prefix:   /highway
+
+fsb_alfred_dashboard_insurance_fee:
+    resource: "@FsbAlfredDashboardBundle/Resources/config/routing/insurance-fee.yml"
+    prefix:   /insurance-fee
+
+fsb_alfred_dashboard_reparation:
+    resource: "@FsbAlfredDashboardBundle/Resources/config/routing/reparation.yml"
+    prefix:   /reparation

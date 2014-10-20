@@ -1,0 +1,111 @@
+{% extends 'FsbAlfredDashboardBundle::sidebar.html.twig' %}
+
+{% form_theme form 'FsbAlfredDashboardBundle:Form:bootstrap.html.twig' %}
+
+{% block site_title %}{{ app.user.carName }} - Assurance{% endblock %}
+
+{% block content %}
+    <ul class='nav nav-tabs'>
+        <li class='active'><a href='#list' data-toggle='tab' class='btn btn-default'>Liste</a></li>
+        <li><a href='#form' data-toggle='tab' class='btn btn-default'>Ajouter</a></li>
+        <li><a href='#statistiques' data-toggle='tab' class='btn btn-default'>Statistiques</a></li>
+    </ul>
+    <div class='tab-content'>
+        <div class='tab-pane active table-responsive' id='list'>
+            <h4>Liste des contrats</h4>
+            <table class='table table-hover table-condensed table-bordered table-static'>
+                <thead>
+                    <tr>
+                        <th>Année</th>
+                        <th>Prix</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if insuranceFees %}
+                        {% for insuranceFee in insuranceFees %}
+                            <tr>
+                                <td>{{ insuranceFee.year|date('Y') }} kms</td>
+                                <td>{{ insuranceFee.price|number_format(2, '.', ',') }} €</td>
+                            </tr>
+                        {% endfor %}
+                        <tr class='total info'>
+                            <td>Total</td>
+                            <td>{{ totalPrice }}</td>
+                        </tr>
+                    {% else %}
+                        <tr class='active'>
+                            <td colspan='2'>Aucun contrat pour le moment</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+        <div class='tab-pane' id='form'>
+            <h4>Renseigner un contrat d'assurance</h4>
+            <form action='{{ path('fsb_alfred_dashboard_page_insurance_fee_create') }}' method='post' {{ form_enctype(form) }}>
+                <div class='row'>
+                    <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12'>
+                        {{ form_row(form.year) }}
+                    </div>
+                    <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12'>
+                        {{ form_row(form.price) }}
+                    </div>
+                </div>
+                {{ form_rest(form) }}
+                <div class='form-group'>
+                    <input type='submit' class='btn btn-success' name='submit' value='Ajouter' />
+                </div>
+            </form>
+        </div>
+        <div class='tab-pane' id='statistiques'>
+            <h4>Statistiques</h4>
+            <hr />
+            <canvas id='insurance-fee-chart' class='chart' width='640' height='420'></canvas>
+            {#
+            <h5>Prix moyen : {{ (100 * (totalCapacity - insuranceFees|last.capacity) / (insuranceFees|last.kilometers - insuranceFees|first.kilometers))|number_format(2, '.', ' ') }} L / 100 kms</h5>
+            #}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src='{{ asset('bundles/fsbalfreddashboard/js/vendor/underscore-1.6.0.min.js') }}'></script>
+    {% if insuranceFees %}
+        <script src='{{ asset('bundles/fsbalfreddashboard/js/vendor/chart.js') }}'></script>
+        <script>
+            $(function () {
+                var context = $('#insurance-fee-chart').get(0).getContext('2d'),
+                    insuranceFeeChart = new Chart(context).Line({
+                        'labels': [
+                            {% for insuranceFee in insuranceFees %}
+                                '{{ insuranceFee.year|date('d-m-Y') }}'{% if not loop.last %},{% endif %}
+                            {% endfor %}
+                        ],
+                        'datasets': [
+                            {
+                                'label': 'Montant',
+                                'fillColor': 'rgba(220,220,220,0.2)',
+                                'strokeColor': 'rgba(220,220,220,1)',
+                                'pointColor': 'rgba(220,220,220,1)',
+                                'pointStrokeColor': '#ccc',
+                                'pointHighlightFill': 'rgb(0, 0, 0)',
+                                'pointHighlightStroke': 'rgba(220,220,220,1)',
+                                'data': [
+                                    {% for insuranceFee in insuranceFees %}{{ insuranceFee.price|number_format(2, '.', ',') }}{% if not loop.last %},{% endif %}{% endfor %}
+                                ]
+                            }
+                        ]
+                    }, {
+                        // responsive: true,
+                        showTooltips: false,
+                        // maintainAspectRatio: true,
+                        tooltipFillColor: 'rgba(0, 0, 0, 0.95)',
+                        scaleFontColor: 'rgb(255,255,255)',
+                        scaleLabel: "<%=value%> €",
+                        tooltipEvents: ["mousemove", "mousedown", "touchstart", "touchmove"],
+                    });
+            });
+        </script>
+    {% endif %}
+{% endblock %}

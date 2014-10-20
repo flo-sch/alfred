@@ -1,0 +1,20 @@
+fsb_alfred_dashboard_page_reparation:
+    path:     /
+    defaults:
+        _controller: FsbAlfredDashboardBundle:Pages/Reparation:index
+    requirements:
+        _method: get
+
+fsb_alfred_dashboard_page_reparation_new:
+    path:     /new
+    defaults:
+        _controller: FsbAlfredDashboardBundle:Pages/Reparation:new
+    requirements:
+        _method: get
+
+fsb_alfred_dashboard_page_reparation_create:
+    path:     /create
+    defaults:
+        _controller: FsbAlfredDashboardBundle:Pages/Reparation:create
+    requirements:
+        _method: post

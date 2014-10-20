@@ -1,0 +1,23 @@
+{% extends 'FsbAlfredDashboardBundle::sidebar.html.twig' %}
+
+{% form_theme form 'FsbAlfredDashboardBundle:Form:bootstrap.html.twig' %}
+
+{% block content %}
+    <div class='tab-pane' id='form'>
+        <form action='{{ path('fsb_alfred_dashboard_page_insurance_fee_create') }}' method='post' {{ form_enctype(form) }}>
+            <div class='row'>
+                <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12'>
+                    {{ form_row(form.year) }}
+                </div>
+                <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12'>
+                    {{ form_row(form.price) }}
+                </div>
+            </div>
+            {{ form_rest(form) }}
+            <div class='form-group'>
+                <input type='submit' class='btn btn-success' name='submit' value='Ajouter' />
+                <a href='{{ path('fsb_alfred_dashboard_page_insurance_fee') }}' class='btn btn-info'>Revenir à la liste</a>
+            </div>
+        </form>
+    </div>
+{% endblock %}
