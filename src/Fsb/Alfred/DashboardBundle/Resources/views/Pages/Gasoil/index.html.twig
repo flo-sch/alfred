@@ -122,7 +122,7 @@
         <div class='tab-pane' id='statistiques'>
             <h4>Statistiques</h4>
             <hr />
-            <canvas id='gasoil-chart' class='chart' width='640' height='420'></canvas>
+            <canvas id='gasoil-chart' class='chart'></canvas>
             <h5>Consommation moyenne : {{ (100 * (totalCapacity - gasoils|last.capacity) / (gasoils|last.kilometers - gasoils|first.kilometers))|number_format(2, '.', ' ') }} L / 100 kms</h5>
         </div>
     </div>
@@ -171,12 +171,11 @@
                             }
                         ]
                     }, {
-                        responsive: true,
                         maintainAspectRatio: true,
-                        tooltipFillColor: 'rgba(0, 0, 0, 0.95)',
                         scaleFontColor: 'rgb(255,255,255)',
                         scaleLabel: "<%=value%> €",
-                        tooltipEvents: ["mousemove", "mousedown", "touchstart", "touchmove"],
+                        tooltipFillColor: 'rgba(0, 0, 0, 0.95)',
+                        tooltipEvents: ["mousemove", "mousedown", "touchstart", "touchmove"]
                     });
             });
         </script>

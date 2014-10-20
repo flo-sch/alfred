@@ -60,7 +60,7 @@
         <div class='tab-pane' id='statistiques'>
             <h4>Statistiques</h4>
             <hr />
-            <canvas id='insurance-fee-chart' class='chart' width='640' height='420'></canvas>
+            <canvas id='insurance-fee-chart' class='chart'></canvas>
             <h5>Prix moyen : {{ totalPrice / insuranceFees|length }} €</h5>
         </div>
     </div>
@@ -95,13 +95,11 @@
                             }
                         ]
                     }, {
-                        // responsive: true,
-                        showTooltips: false,
-                        // maintainAspectRatio: true,
-                        tooltipFillColor: 'rgba(0, 0, 0, 0.95)',
+                        maintainAspectRatio: true,
                         scaleFontColor: 'rgb(255,255,255)',
                         scaleLabel: "<%=value%> €",
-                        tooltipEvents: ["mousemove", "mousedown", "touchstart", "touchmove"],
+                        tooltipFillColor: 'rgba(0, 0, 0, 0.95)',
+                        tooltipEvents: ["mousemove", "mousedown", "touchstart", "touchmove"]
                     });
             });
         </script>

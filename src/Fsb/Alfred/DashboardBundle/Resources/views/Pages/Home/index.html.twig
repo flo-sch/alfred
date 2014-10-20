@@ -61,10 +61,9 @@
                 }], {
                     responsive: true,
                     maintainAspectRatio: true,
-                    showTooltips: false,
-                    // tooltipFillColor: 'rgba(0, 0, 0, 0.95)',
-                    // tooltipTemplate: {% raw %}'<%if (label){%><%=label%>: <%}%><%= value %>€'{% endraw %},
-                    // tooltipEvents: ['mousemove', 'mousedown', 'touchstart', 'touchmove'],
+                    tooltipFillColor: 'rgba(0, 0, 0, 0.95)',
+                    tooltipTemplate: {% raw %}'<%if (label){%><%=label%>: <%}%><%= value %>€'{% endraw %},
+                    tooltipEvents: ['mousemove', 'mousedown', 'touchstart', 'touchmove'],
                     animationEasing: 'easeOutCirc'
                 });
         });

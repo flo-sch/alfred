@@ -116,7 +116,7 @@
         <div class='tab-pane' id='statistiques'>
             <h4>Statistiques</h4>
             <hr />
-            <canvas id='reparation-chart' class='chart' width='640' height='420'></canvas>
+            <canvas id='reparation-chart' class='chart'></canvas>
         </div>
     </div>
 {% endblock %}
@@ -164,13 +164,11 @@
                             }
                         ]
                     }, {
-                        // responsive: true,
-                        showTooltips: false,
-                        // maintainAspectRatio: true,
+                        maintainAspectRatio: true,
                         tooltipFillColor: 'rgba(0, 0, 0, 0.95)',
                         scaleFontColor: 'rgb(255,255,255)',
                         scaleLabel: "<%=value%> €",
-                        tooltipEvents: ["mousemove", "mousedown", "touchstart", "touchmove"],
+                        tooltipEvents: ["mousemove", "mousedown", "touchstart", "touchmove"]
                     });
             });
         </script>

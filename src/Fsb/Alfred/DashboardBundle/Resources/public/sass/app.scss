@@ -121,6 +121,8 @@ html {
                 }
                 .chart {
                     cursor: pointer;
+                    width: 100% !important;
+                    height: auto !important;
                 }
             }
         }

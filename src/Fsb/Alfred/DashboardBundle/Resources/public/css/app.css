@@ -142,6 +142,8 @@ html body #main-container #site-content-wrapper .nav-tabs > li > a {
 }
 html body #main-container #site-content-wrapper .chart {
   cursor: pointer;
+  width: 100% !important;
+  height: auto !important;
 }
 
 /*!
