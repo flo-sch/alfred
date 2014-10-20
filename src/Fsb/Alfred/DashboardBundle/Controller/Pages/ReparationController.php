@@ -24,7 +24,7 @@ class ReparationController extends FrontController
         ));
     }
 
-    public function editAction()
+    public function newAction()
     {
         $reparation = new Reparation();
         $form = $this->createForm(new ReparationType(), $reparation);

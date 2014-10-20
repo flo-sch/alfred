@@ -1,0 +1,60 @@
+{% extends 'FsbAlfredDashboardBundle::sidebar.html.twig' %}
+
+{% form_theme form 'FsbAlfredDashboardBundle:Form:bootstrap.html.twig' %}
+
+{% block content %}
+    <div class='tab-pane' id='form'>
+        <form action='{{ path('fsb_alfred_dashboard_page_reparation_create') }}' method='post' {{ form_enctype(form) }}>
+            <fieldset>
+                    <div class='row'>
+                        <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12'>
+                            {{ form_row(form.object) }}
+                        </div>
+                        <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12'>
+                            {{ form_row(form.price) }}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class='row'>
+                        <div class='col-lg-4 col-md-4 col-sm-4 col-xs-12'>
+                            {{ form_row(form.kilometers) }}
+                        </div>
+                        <div class='col-lg-4 col-md-4 col-sm-4 col-xs-12'>
+                            {{ form_row(form.place) }}
+                        </div>
+                        <div class='col-lg-4 col-md-4 col-sm-4 col-xs-12'>
+                            {{ form_row(form.company) }}
+                        </div>
+                    </div>
+                    <div id='coordinates-row' class='row'>
+                        <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12'>
+                            <div class='form-group'>
+                                {{ form_label(form.latitude) }}
+                                <div class='input-group'>
+                                    {{ form_widget(form.latitude) }}
+                                    <span class='input-group-addon'><span class='icon icon-spinner icon-spin'></span></span>
+                                </div>
+                                {{ form_errors(form.latitude) }}
+                            </div>
+                        </div>
+                        <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12'>
+                            <div class='form-group'>
+                                {{ form_label(form.longitude) }}
+                                <div class='input-group'>
+                                    {{ form_widget(form.longitude) }}
+                                    <span class='input-group-addon'><span class='icon icon-spinner icon-spin'></span></span>
+                                </div>
+                                {{ form_errors(form.longitude) }}
+                            </div>
+                        </div>
+                    </div>
+                    {{ form_rest(form) }}
+                </fieldset>
+            <div class='form-group'>
+                <input type='submit' class='btn btn-success' name='submit' value='Ajouter' />
+                <a href='{{ path('fsb_alfred_dashboard_page_reparation') }}' class='btn btn-info'>Revenir à la liste</a>
+            </div>
+        </form>
+    </div>
+{% endblock %}

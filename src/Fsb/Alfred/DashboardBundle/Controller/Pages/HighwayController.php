@@ -27,7 +27,7 @@ class HighwayController extends FrontController
         ));
     }
 
-    public function editAction()
+    public function newAction()
     {
         $highway = new Highway();
         $form = $this->createForm(new HighwayType(), $highway);
