@@ -14,7 +14,7 @@
     </ul>
     <div class='tab-content'>
         <div class='tab-pane active table-responsive' id='list'>
-            <h4>Liste des réparations{% if reparations %} <span class='pull-right'><a id='toggle-infos-lines-button' href='#'><span class='icon icon-plus-circle icon-lg'></span></a></span>{% endif %}</h4>
+            <h4>Liste des réparations</h4>
             <table class='table table-hover table-condensed table-bordered table-static'>
                 <thead>
                     <tr>
@@ -29,19 +29,10 @@
                         {% for reparation in reparations %}
                             <tr>
                                 <td>{{ reparation.createdAt|date('d-m-Y') }}</td>
-                                <td>{{ reparation.kilometers }} kms</td>
+                                <td>{% if reparation.kilometers %}{{ reparation.kilometers }} kms{% else %}Non renseignés{% endif %}</td>
                                 <td>{{ reparation.object }}</td>
                                 <td>{{ reparation.price|number_format(2, '.', ',') }} €</td>
                             </tr>
-                            {% if loop.index > 1 %}
-                                {% set price = reparation.price - reparations[loop.index0 - 1].price %}
-                                {% set amount = reparation.amount - reparations[loop.index0 - 1].amount %}
-                                <tr class='infos-line {% if price > 0 %}danger{% else %}success{% endif %}'>
-                                    <td colspan='2'><div>Infos</div></td>
-                                    <td>{{ reparation.object }}</td>
-                                    <td><div>{{ (reparation.price - reparations[loop.index0 - 1].price)|number_format(2, '.', ',') }} L</div></td>
-                                </tr>
-                            {% endif %}
                         {% endfor %}
                         <tr class='total info'>
                             <td>Total</td>
@@ -170,7 +161,7 @@
                             'pointHighlightFill': 'rgb(0, 0, 0)',
                             'pointHighlightStroke': 'rgba(220,220,220,1)',
                             'data': [
-                                {% for reparation in reparations %}{{ reparation.amount }}{% if not loop.last %},{% endif %}{% endfor %}
+                                {% for reparation in reparations %}{{ reparation.price }}{% if not loop.last %},{% endif %}{% endfor %}
                             ]
                         }
                     ]
@@ -188,7 +179,7 @@
                     $(window).on('resize', function (event) {
                         drawChart($canvas);
                     }).trigger('resize');
-                }, 300);
+                }, 1000);
             });
         </script>
     {% endif %}

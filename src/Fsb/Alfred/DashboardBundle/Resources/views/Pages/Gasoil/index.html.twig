@@ -14,7 +14,7 @@
     </ul>
     <div class='tab-content'>
         <div class='tab-pane active table-responsive' id='list'>
-            <h4>Liste des pleins d'essence{% if gasoils %} <span class='pull-right'><a id='toggle-infos-lines-button' href='#'><span class='icon icon-plus-circle icon-lg'></span></a></span>{% endif %}</h4>
+            <h4>Liste des pleins d'essence{% if gasoils|length > 1 %} <span class='pull-right'><a id='toggle-infos-lines-button' href='#'><span class='icon icon-plus-circle icon-lg'></span></a></span>{% endif %}</h4>
             <table class='table table-hover table-condensed table-bordered table-static'>
                 <thead>
                     <tr>
@@ -30,7 +30,7 @@
                         {% for gasoil in gasoils %}
                             <tr>
                                 <td>{{ gasoil.createdAt|date('d-m-Y') }}</td>
-                                <td>{{ gasoil.kilometers }} kms</td>
+                                <td>{% if gasoil.kilometers %}{{ gasoil.kilometers }} kms{% else %}Non renseignés{% endif %}</td>
                                 <td>{{ gasoil.price|number_format(3, '.', ',') }} € / L</td>
                                 <td>{{ gasoil.capacity|number_format(2, '.', ',') }} L</td>
                                 <td>{{ gasoil.amount|number_format(2, '.', ',') }} €</td>
