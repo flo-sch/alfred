@@ -23,6 +23,8 @@ class ProfileType extends AbstractType
             ->add('wouldManageHighway', 'checkbox', array('label' => 'Gestion des trajets autoroutiers ?', 'required' => false))
             ->add('wouldManageInsuranceFee', 'checkbox', array('label' => 'Gestion des contrats d\'assurance ?', 'required' => false))
             ->add('wouldManageReparations', 'checkbox', array('label' => 'Gestion des réparations ?', 'required' => false))
+            ->add('initialKilometers', 'integer', array('label' => 'Kilomètrage initial', 'required' => false))
+            ->add('currentKilometers', 'integer', array('label' => 'Kilomètrage actuel', 'required' => false))
         ;
     }
 

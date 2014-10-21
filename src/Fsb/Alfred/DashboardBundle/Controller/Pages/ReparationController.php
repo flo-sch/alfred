@@ -49,6 +49,12 @@ class ReparationController extends FrontController
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($reparation);
+            $driver = $this->getUser();
+            $kilometers = $reparation->getKilometers();
+            if ($kilometers && $kilometers > $driver->getCurrentKilometers()) {
+                $driver->setCurrentKilometers($kilometers);
+                $em->persist($driver);
+            }
             $em->flush();
 
             $request->getSession()->getFlashBag()->add('success', 'Votre réparation est bien enregistré');

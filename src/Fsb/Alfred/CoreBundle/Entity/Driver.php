@@ -128,6 +128,20 @@ class Driver implements AdvancedUserInterface, Serializable
     private $wouldManageReparations;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="initial_kilometers", type="integer")
+     */
+    private $initialKilometers;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="current_kilometers", type="integer")
+     */
+    private $currentKilometers;
+
+    /**
      * Public constructor
      *
      * @return User
@@ -142,6 +156,8 @@ class Driver implements AdvancedUserInterface, Serializable
         $this->wouldManageHighway = true;
         $this->wouldManageInsuranceFee = true;
         $this->wouldManageReparations = true;
+        $this->initialKilometers = 0;
+        $this->currentKilometers = 0;
 
         return $this;
     }
@@ -526,6 +542,52 @@ class Driver implements AdvancedUserInterface, Serializable
     public function wouldManageReparations()
     {
         return $this->wouldManageReparations;
+    }
+
+    /**
+     * Set initialKilometers
+     *
+     * @param integer $initialKilometers
+     * @return Driver
+     */
+    public function setInitialKilometers($initialKilometers)
+    {
+        $this->initialKilometers = $initialKilometers;
+
+        return $this;
+    }
+
+    /**
+     * Get initialKilometers
+     *
+     * @return integer
+     */
+    public function getInitialKilometers()
+    {
+        return $this->initialKilometers;
+    }
+
+    /**
+     * Set currentKilometers
+     *
+     * @param integer $currentKilometers
+     * @return Driver
+     */
+    public function setCurrentKilometers($currentKilometers)
+    {
+        $this->currentKilometers = $currentKilometers;
+
+        return $this;
+    }
+
+    /**
+     * Get currentKilometers
+     *
+     * @return integer
+     */
+    public function getCurrentKilometers()
+    {
+        return $this->currentKilometers;
     }
 
     /**

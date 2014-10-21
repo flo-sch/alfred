@@ -11,7 +11,12 @@ class HomeController extends FrontController
         $em = $this->getDoctrine()->getManager();
         $driver = $this->getUser();
 
-        $drivenDistance = $em->getRepository('FsbAlfredCoreBundle:Gasoil')->getKilometersDifference();
+        $gasoilDrivenDistance = $em->getRepository('FsbAlfredCoreBundle:Gasoil')->getKilometersDifference();
+        $drivenDistance = $driver->getCurrentKilometers() - $driver->getInitialKilometers();
+        if ($gasoilDrivenDistance > $drivenDistance) {
+            // Still a problem here, however...
+            $drivenDistance = $gasoilDrivenDistance;
+        }
 
         $averageConsommation = 0;
         $averageGasoilPrice = 0;

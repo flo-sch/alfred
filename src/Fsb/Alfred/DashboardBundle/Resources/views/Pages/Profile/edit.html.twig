@@ -27,6 +27,14 @@
                 {{ form_row(form.color) }}
             </div>
         </div>
+        <div class='row'>
+            <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12'>
+                {{ form_row(form.initialKilometers) }}
+            </div>
+            <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12'>
+                {{ form_row(form.currentKilometers) }}
+            </div>
+        </div>
         {{ form_rest(form) }}
         <div class='form-group'>
             <input type='submit' class='btn btn-success' name='submit' value='Editer' />

@@ -49,6 +49,12 @@ class GasoilController extends FrontController
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($gasoil);
+            $driver = $this->getUser();
+            $kilometers = $gasoil->getKilometers();
+            if ($kilometers && $kilometers > $driver->getCurrentKilometers()) {
+                $driver->setCurrentKilometers($kilometers);
+                $em->persist($driver);
+            }
             $em->flush();
 
             $request->getSession()->getFlashBag()->add('success', 'Votre plein d\'essence est bien enregistré');
