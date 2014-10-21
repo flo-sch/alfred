@@ -5,6 +5,7 @@ $color: rgb(34, 49, 63);
 $links-color: rgb(255, 255, 255);
 $background: rgb(51, 110, 123);
 $sidebar-background: rgb(34, 49, 63);
+$sidebar-color: rgb(255, 255, 255);
 $navbar-background: rgb(34, 49, 63);
 $navbar-border: rgb(255, 255, 255);
 
@@ -55,6 +56,7 @@ html {
                 height: 100%;
                 box-sizing: border-box;
                 padding-top: $navbar-top-offset;
+                color: $sidebar-color;
                 background: $sidebar-background;
                 .top-bordered {
                     border-top: 1px solid $links-color;

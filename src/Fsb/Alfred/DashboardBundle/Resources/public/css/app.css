@@ -83,6 +83,7 @@ html body #main-container .sidebar {
   height: 100%;
   box-sizing: border-box;
   padding-top: 51px;
+  color: white;
   background: #22313f;
 }
 html body #main-container .sidebar .top-bordered {

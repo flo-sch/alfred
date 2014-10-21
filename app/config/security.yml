@@ -38,6 +38,11 @@ security:
                 check_path: fsb_alfred_dashboard_page_login_check
                 default_target_path: fsb_alfred_dashboard_homepage
                 post_only: true
+            remember_me:
+                key: %secret%
+                lifetime: 31536000
+                path: /
+                domain: ~
             logout:
                 path: fsb_alfred_dashboard_page_logout
                 target: /
