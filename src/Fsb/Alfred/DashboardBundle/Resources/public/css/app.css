@@ -163,6 +163,10 @@ html body #main-container #site-content-wrapper .pie-chart-wrapper {
   max-width: 200px;
   margin: auto;
 }
+html body #main-container #site-content-wrapper form .checkbox input,
+html body #main-container #site-content-wrapper form .radio input {
+  margin-left: 0;
+}
 
 /*!
  *  Font Awesome 4.2.0 by @davegandy - http://fontawesome.io - @fontawesome

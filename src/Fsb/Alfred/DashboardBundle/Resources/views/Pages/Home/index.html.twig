@@ -11,11 +11,23 @@
                     <tbody>
                         <tr>
                             <th>Consommation moyenne</th>
-                            <td>{{ averageConsommation|number_format(2, '.', ',') }} L / 100kms</td>
+                            <td>{% if app.user.wouldManageGasoil %}{{ averageConsommation|number_format(2, '.', ',') }} L / 100kms{% else %}Carburant non pris en charge{% endif %}</td>
                         </tr>
                         <tr>
                             <th>Prix moyen du carburant</th>
-                            <td>{{ averageLiterPrice|number_format(3, '.', ',') }} €</td>
+                            <td>{% if app.user.wouldManageGasoil %}{{ averageLiterPrice|number_format(3, '.', ',') }} €{% else %}Carburant non pris en charge{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <th>Coût total de l'autoroute</th>
+                            <td>{% if app.user.wouldManageHighway %}{{ highwayTotalCost|number_format(2, '.', ',') }} €{% else %}Autoroute non prise en charge{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <th>Coût total de l'assurance</th>
+                            <td>{% if app.user.wouldManageInsuranceFee %}{{ insuranceFeesTotalCost|number_format(2, '.', ',') }} €{% else %}Assurance non prise en charge{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <th>Coût total des réparations</th>
+                            <td>{% if app.user.wouldManageReparations %}{{ reparationsTotalCost|number_format(2, '.', ',') }} €{% else %}Réparations non prises en charge{% endif %}</td>
                         </tr>
                         <tr>
                             <th>Coût moyen (total)</th>
@@ -39,33 +51,45 @@
     <script src='{{ asset('bundles/fsbalfreddashboard/js/vendor/chart.js') }}'></script>
     <script>
         Chart.defaults.global.responsive = !0;
-        var $canvas = $('#global-chart'), context, globalChart;
+        var $canvas = $('#global-chart'), data = [], context, globalChart;
         $canvas.prop({
             width: $canvas.parent().width(),
             height: 200
         });
         context = $canvas.get(0).getContext('2d');
-        globalChart = new Chart(context).Pie([{
-            value: {{ gasoilTotalCost|number_format(2, '.', ',') }},
-            color: 'rgba(34, 49, 63, 0.15)',
-            highlight: 'rgba(34, 49, 63, 0.85)',
-            label: 'Gasoil'
-        }, {
-            value: {{ highwayTotalCost|number_format(2, '.', ',') }},
-            color: 'rgba(34, 49, 63, 0.15)',
-            highlight: 'rgba(34, 49, 63, 0.85)',
-            label: 'Highways'
-        }, {
-            value: {{ reparationsTotalCost|number_format(2, '.', ',') }},
-            color: 'rgba(34, 49, 63, 0.15)',
-            highlight: 'rgba(34, 49, 63, 0.85)',
-            label: 'Réparations'
-        }, {
-            value: {{ insuranceFeesTotalCost|number_format(2, '.', ',') }},
-            color: 'rgba(34, 49, 63, 0.15)',
-            highlight: 'rgba(34, 49, 63, 0.85)',
-            label: 'Insurance Fees'
-        }], {
+        {% if app.user.wouldManageGasoil %}
+            data.push({
+                value: {{ gasoilTotalCost|number_format(2, '.', ',') }},
+                color: 'rgba(34, 49, 63, 0.15)',
+                highlight: 'rgba(34, 49, 63, 0.85)',
+                label: 'Carburant'
+            });
+        {% endif %}
+        {% if app.user.wouldManageHighway %}
+            data.push({
+                value: {{ highwayTotalCost|number_format(2, '.', ',') }},
+                color: 'rgba(34, 49, 63, 0.15)',
+                highlight: 'rgba(34, 49, 63, 0.85)',
+                label: 'Autoroute'
+            });
+        {% endif %}
+        {% if app.user.wouldManageInsuranceFee %}
+            data.push({
+                value: {{ insuranceFeesTotalCost|number_format(2, '.', ',') }},
+                color: 'rgba(34, 49, 63, 0.15)',
+                highlight: 'rgba(34, 49, 63, 0.85)',
+                label: 'Assurance'
+            });
+        {% endif %}
+        {% if app.user.wouldManageReparations %}
+            data.push({
+                value: {{ reparationsTotalCost|number_format(2, '.', ',') }},
+                color: 'rgba(34, 49, 63, 0.15)',
+                highlight: 'rgba(34, 49, 63, 0.85)',
+                label: 'Réparations'
+            });
+        {% endif %}
+        globalChart = new Chart(context).Pie(data, {
             responsive: true,
             maintainAspectRatio: true,
             tooltipFillColor: 'rgba(0, 0, 0, 0.95)',

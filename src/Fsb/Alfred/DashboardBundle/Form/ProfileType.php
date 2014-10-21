@@ -19,6 +19,10 @@ class ProfileType extends AbstractType
             ->add('email', 'email', array('label' => 'Adresse e-mail', 'required' => true))
             ->add('carName', 'text', array('label' => 'Nom de voiture', 'required' => true))
             ->add('color', 'text', array('label' => 'Couleur', 'required' => false, 'attr' => array('class' => 'colorpicker')))
+            ->add('wouldManageGasoil', 'checkbox', array('label' => 'Gestion du carburant ?', 'required' => false))
+            ->add('wouldManageHighway', 'checkbox', array('label' => 'Gestion des trajets autoroutiers ?', 'required' => false))
+            ->add('wouldManageInsuranceFee', 'checkbox', array('label' => 'Gestion des contrats d\'assurance ?', 'required' => false))
+            ->add('wouldManageReparations', 'checkbox', array('label' => 'Gestion des réparations ?', 'required' => false))
         ;
     }
 

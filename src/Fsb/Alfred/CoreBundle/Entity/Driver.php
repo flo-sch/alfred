@@ -100,6 +100,34 @@ class Driver implements AdvancedUserInterface, Serializable
     private $isActive;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="would_manage_gasoil", type="boolean")
+     */
+    private $wouldManageGasoil;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="would_manage_highway", type="boolean")
+     */
+    private $wouldManageHighway;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="would_manage_insurance_fee", type="boolean")
+     */
+    private $wouldManageInsuranceFee;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="would_manage_reparations", type="boolean")
+     */
+    private $wouldManageReparations;
+
+    /**
      * Public constructor
      *
      * @return User
@@ -110,6 +138,10 @@ class Driver implements AdvancedUserInterface, Serializable
         $this->updatedAt = new DateTime();
         $this->isActive = true;
         $this->salt = sha1(uniqid(null, true));
+        $this->wouldManageGasoil = true;
+        $this->wouldManageHighway = true;
+        $this->wouldManageInsuranceFee = true;
+        $this->wouldManageReparations = true;
 
         return $this;
     }
@@ -362,6 +394,138 @@ class Driver implements AdvancedUserInterface, Serializable
     public function getColor()
     {
         return $this->color;
+    }
+
+    /**
+     * Set wouldManageGasoil
+     *
+     * @param boolean $wouldManageGasoil
+     * @return Driver
+     */
+    public function setWouldManageGasoil($wouldManageGasoil)
+    {
+        $this->wouldManageGasoil = $wouldManageGasoil;
+
+        return $this;
+    }
+
+    /**
+     * Get wouldManageGasoil
+     *
+     * @return boolean
+     */
+    public function getWouldManageGasoil()
+    {
+        return $this->wouldManageGasoil;
+    }
+
+    /**
+     * getWouldManageGasoil
+     *
+     * @return boolean
+     */
+    public function wouldManageGasoil()
+    {
+        return $this->wouldManageGasoil;
+    }
+
+    /**
+     * Set wouldManageHighway
+     *
+     * @param boolean $wouldManageHighway
+     * @return Driver
+     */
+    public function setWouldManageHighway($wouldManageHighway)
+    {
+        $this->wouldManageHighway = $wouldManageHighway;
+
+        return $this;
+    }
+
+    /**
+     * Get wouldManageHighway
+     *
+     * @return boolean
+     */
+    public function getWouldManageHighway()
+    {
+        return $this->wouldManageHighway;
+    }
+
+    /**
+     * getWouldManageHighway alias
+     *
+     * @return boolean
+     */
+    public function wouldManageHighway()
+    {
+        return $this->wouldManageHighway;
+    }
+
+    /**
+     * Set wouldManageInsuranceFee
+     *
+     * @param boolean $wouldManageInsuranceFee
+     * @return Driver
+     */
+    public function setWouldManageInsuranceFee($wouldManageInsuranceFee)
+    {
+        $this->wouldManageInsuranceFee = $wouldManageInsuranceFee;
+
+        return $this;
+    }
+
+    /**
+     * Get wouldManageInsuranceFee
+     *
+     * @return boolean
+     */
+    public function getWouldManageInsuranceFee()
+    {
+        return $this->wouldManageInsuranceFee;
+    }
+
+    /**
+     * getWouldManageInsuranceFee alias
+     *
+     * @return boolean
+     */
+    public function wouldManageInsuranceFee()
+    {
+        return $this->wouldManageInsuranceFee;
+    }
+
+    /**
+     * Set wouldManageReparations
+     *
+     * @param boolean $wouldManageReparations
+     * @return Driver
+     */
+    public function setWouldManageReparations($wouldManageReparations)
+    {
+        $this->wouldManageReparations = $wouldManageReparations;
+
+        return $this;
+    }
+
+    /**
+     * Get wouldManageReparations
+     *
+     * @return boolean
+     */
+    public function getWouldManageReparations()
+    {
+        return $this->wouldManageReparations;
+    }
+
+    /**
+     * getWouldManageReparations alias
+     *
+     * @return boolean
+     */
+    public function wouldManageReparations()
+    {
+        return $this->wouldManageReparations;
     }
 
     /**

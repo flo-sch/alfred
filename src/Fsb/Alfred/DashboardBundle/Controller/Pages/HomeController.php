@@ -9,17 +9,41 @@ class HomeController extends FrontController
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
+        $driver = $this->getUser();
 
         $drivenDistance = $em->getRepository('FsbAlfredCoreBundle:Gasoil')->getKilometersDifference();
-        $averageConsommation = ($drivenDistance > 0 ? (100 * (($em->getRepository('FsbAlfredCoreBundle:Gasoil')->getTotalCapacity() - $em->getRepository('FsbAlfredCoreBundle:Gasoil')->getLastCapacity()) / $drivenDistance)) : 0);
 
-        $averageGasoilPrice = $em->getRepository('FsbAlfredCoreBundle:Gasoil')->getAverageLiterPrice();
+        $averageConsommation = 0;
+        $averageGasoilPrice = 0;
 
-        $gasoilTotalPrice = $em->getRepository('FsbAlfredCoreBundle:Gasoil')->getTotalAmount();
-        $reparationsTotalPrice = $em->getRepository('FsbAlfredCoreBundle:Reparation')->getTotalPrice();
-        $highwaysTotalPrice = $em->getRepository('FsbAlfredCoreBundle:Highway')->getTotalPrice();
-        $insuranceTotalPrice = $em->getRepository('FsbAlfredCoreBundle:InsuranceFee')->getTotalPrice();
-        $averagePrice = ($drivenDistance > 0 ? (($gasoilTotalPrice + $reparationsTotalPrice + $highwaysTotalPrice + $insuranceTotalPrice) / $drivenDistance) : 0);
+        $averagePrice = 0;
+        $gasoilTotalPrice = 0;
+        $highwaysTotalPrice = 0;
+        $insuranceTotalPrice = 0;
+        $reparationsTotalPrice = 0;
+
+        if ($drivenDistance > 0) {
+            if ($driver->wouldManageGasoil()) {
+                $averageConsommation = 100 * ($em->getRepository('FsbAlfredCoreBundle:Gasoil')->getTotalCapacity() - $em->getRepository('FsbAlfredCoreBundle:Gasoil')->getLastCapacity()) / $drivenDistance;
+                $averageGasoilPrice = $em->getRepository('FsbAlfredCoreBundle:Gasoil')->getAverageLiterPrice();
+                $gasoilTotalPrice = $em->getRepository('FsbAlfredCoreBundle:Gasoil')->getTotalAmount();
+                $averagePrice += $gasoilTotalPrice;
+            }
+            if ($driver->wouldManageHighway()) {
+                $highwaysTotalPrice = $em->getRepository('FsbAlfredCoreBundle:Highway')->getTotalPrice();
+                $averagePrice += $highwaysTotalPrice;
+            }
+            if ($driver->wouldManageInsuranceFee()) {
+                $insuranceTotalPrice = $em->getRepository('FsbAlfredCoreBundle:InsuranceFee')->getTotalPrice();
+                $averagePrice += $insuranceTotalPrice;
+            }
+            if ($driver->wouldManageReparations()) {
+                $reparationsTotalPrice = $em->getRepository('FsbAlfredCoreBundle:Reparation')->getTotalPrice();
+                $averagePrice += $reparationsTotalPrice;
+            }
+
+            $averagePrice /= $drivenDistance;
+        }
 
         return $this->render('FsbAlfredDashboardBundle:Pages/Home:index.html.twig', array(
             'averageConsommation' => $averageConsommation,
@@ -27,8 +51,8 @@ class HomeController extends FrontController
             'averageCost' => $averagePrice,
             'gasoilTotalCost' => $gasoilTotalPrice,
             'highwayTotalCost' => $highwaysTotalPrice,
-            'reparationsTotalCost' => $reparationsTotalPrice,
-            'insuranceFeesTotalCost' => $insuranceTotalPrice
+            'insuranceFeesTotalCost' => $insuranceTotalPrice,
+            'reparationsTotalCost' => $reparationsTotalPrice
         ));
     }
 }

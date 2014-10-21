@@ -138,12 +138,18 @@ html {
                 }
                 .chart {
                     cursor: pointer;
-                    // width: 100% !important;
-                    // height: auto !important;
                 }
                 .pie-chart-wrapper {
                     max-width: 200px;
                     margin: auto;
+                }
+                form {
+                    .checkbox,
+                    .radio {
+                        input {
+                            margin-left: 0;
+                        }
+                    }
                 }
             }
         }

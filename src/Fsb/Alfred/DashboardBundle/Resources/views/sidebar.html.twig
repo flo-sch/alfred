@@ -18,12 +18,20 @@
             <ul class='nav' id='sidebar-nav'>
                 <li><h4 class='text-center'>{{ app.user.carName }}</h4></li>
                 <li class='top-bordered bottom-bordered'><a href='{{ path('fsb_alfred_dashboard_homepage') }}'><span class='icon icon-pie-chart'></span> Statistiques</a></li>
-                <li><a href='{{ path('fsb_alfred_dashboard_page_gasoil') }}'><span class='icon icon-credit-card'></span> Carburant</a></li>
-                <li><a href='{{ path('fsb_alfred_dashboard_page_reparation') }}'><span class='icon icon-wrench'></span> Réparations</a></li>
-                <li><a href='{{ path('fsb_alfred_dashboard_page_highway') }}'><span class='icon icon-money'></span> Trajets</a></li>
-                <li><a href='{{ path('fsb_alfred_dashboard_page_insurance_fee') }}'><span class='icon icon-archive'></span> Assurance</a></li>
+                {% if app.user.wouldManageGasoil %}
+                    <li><a href='{{ path('fsb_alfred_dashboard_page_gasoil') }}'><span class='icon icon-credit-card'></span> Carburant</a></li>
+                {% endif %}
+                {% if app.user.wouldManageHighway %}
+                    <li><a href='{{ path('fsb_alfred_dashboard_page_highway') }}'><span class='icon icon-road'></span> Autoroute</a></li>
+                {% endif %}
+                {% if app.user.wouldManageInsuranceFee %}
+                    <li><a href='{{ path('fsb_alfred_dashboard_page_insurance_fee') }}'><span class='icon icon-archive'></span> Assurance</a></li>
+                {% endif %}
+                {% if app.user.wouldManageReparations %}
+                    <li><a href='{{ path('fsb_alfred_dashboard_page_reparation') }}'><span class='icon icon-wrench'></span> Réparations</a></li>
+                {% endif %}
                 <li class='top-bordered bottom-bordered'><a href='{{ path('fsb_alfred_dashboard_page_profile') }}'><span class='icon icon-user'></span> Profil</a></li>
-                <li class='top-bordered bottom-bordered'><a href='{{ path('fsb_alfred_dashboard_page_logout') }}'><span class='icon icon-power-off'></span> Déconnexion</a></li>
+                <li class='bottom-bordered'><a href='{{ path('fsb_alfred_dashboard_page_logout') }}'><span class='icon icon-power-off'></span> Déconnexion</a></li>
             </ul>
         </aside>
     {% endif %}
