@@ -11,7 +11,23 @@
 
 {% block content %}
     <form action='{{ path('fsb_alfred_dashboard_page_profile') }}' method='post' {{ form_enctype(form) }}>
-        {{ form_widget(form) }}
+        <div class='row'>
+            <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12'>
+                {{ form_row(form.username) }}
+            </div>
+            <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12'>
+                {{ form_row(form.email) }}
+            </div>
+        </div>
+        <div class='row'>
+            <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12'>
+                {{ form_row(form.carName) }}
+            </div>
+            <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12'>
+                {{ form_row(form.color) }}
+            </div>
+        </div>
+        {{ form_rest(form) }}
         <div class='form-group'>
             <input type='submit' class='btn btn-success' name='submit' value='Editer' />
         </div>
