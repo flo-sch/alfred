@@ -110,7 +110,7 @@
                 {% block main_container %}
                     {% block pre_wrapper %}{% endblock %}
                     {% block site_content_wrapper %}
-                        <section id='site-content-wrapper' class='wrapper container-fluid' {#{% if app.user and app.user.color %}style='background-color: {{ app.user.color }}'{% endif %}#}>
+                        <section id='site-content-wrapper' class='wrapper container-fluid' {% if app.user and app.user.color %}style='background-color: {{ app.user.color }}'{% endif %}>
                             {% for type, messages in app.session.flashbag.all %}
                                 {% for message in messages %}
                                     <div class='alert alert-{{ type }} alert-dismissable'>

@@ -31,7 +31,7 @@
                     <li><a href='{{ path('fsb_alfred_dashboard_page_reparation') }}'><span class='icon icon-wrench'></span> Réparations</a></li>
                 {% endif %}
                 <li class='top-bordered bottom-bordered'><a href='{{ path('fsb_alfred_dashboard_page_profile') }}'><span class='icon icon-user'></span> Profil</a></li>
-                <li class='bottom-bordered'><a href='{{ path('fsb_alfred_dashboard_page_logout') }}'><span class='icon icon-power-off'></span> Déconnexion</a></li>
+                <li id='deconnection-link-wrapper' class='top-bordered bottom-bordered'><a href='{{ path('fsb_alfred_dashboard_page_logout') }}'><span class='icon icon-power-off'></span> Déconnexion</a></li>
             </ul>
         </aside>
     {% endif %}

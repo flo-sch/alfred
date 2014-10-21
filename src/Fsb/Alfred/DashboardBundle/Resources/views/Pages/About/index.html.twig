@@ -1,8 +1,8 @@
 {% extends 'FsbAlfredDashboardBundle::sidebar.html.twig' %}
 
-{% block title %}Who is Alfred ?{% endblock %}
+{% block title %}Qui est Alfred ?{% endblock %}
 
-{% block site_title %}Who is Alfred ?{% endblock %}
+{% block site_title %}Qui est Alfred ?{% endblock %}
 
 {% block content %}
     <p class='lead'>Alfred est un majordome.</p>
@@ -13,4 +13,32 @@
         <br />
         Même s'il ne va jamais revendre ou donner vos données à qui que ce soit, ne prenez cette sale habitude d'en dire trop sur vous sur Internet !
     </p>
+    <h4>Comment vit Alfred ?</h4>
+    <div id='how-to-use-accordion' class='panel-group'>
+        <div class='panel panel-transparent'>
+            <div class='panel-heading'>
+                <h4 class='panel-title'>
+                    <a data-toggle='collapse' data-parent='how-to-use-accordion' href='#account'>Compte</a>
+                </h4>
+            </div>
+            <div id='account' class='panel-collapse collapse in'>
+                <div class='panel-body text-justify'>
+                    <p>Oui, Alfred le sait lui-même mieux que quiconque, c'est toujours très pénible de devoir créer un compte sur chaque site que l'on visite.</p>
+                    <p>Mais bon, d'un côté, Alfred gère jusque 3.18x10<sup>9</sup> voitures en même temps alors... Il faut toujours le remettre dans le contexte.</p>
+                    <p>Vous ne voudriez pas qu'il confonde votre voiture avec celle d'un autre, n'est-ce pas ?</p>
+                </div>
+            </div>
+        </div>
+        <div class='panel panel-transparent'>
+            <div class='panel-heading'>
+                <h4 class='panel-title'>
+                    <a data-toggle='collapse' data-parent='how-to-use-accordion' href='#profile'>Profil</a>
+                </h4>
+            </div>
+            <div id='profile' class='panel-collapse collapse'>
+                <div class='panel-body text-justify'>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

@@ -30,7 +30,7 @@
                             <td>{% if app.user.wouldManageReparations %}{{ reparationsTotalCost|number_format(2, '.', ',') }} €{% else %}Réparations non prises en charge{% endif %}</td>
                         </tr>
                         <tr>
-                            <th>Coût moyen (total)</th>
+                            <th>Coût moyen total au kilomètre</th>
                             <td>{{ averageCost|number_format(2, '.', ',') }} € / km</td>
                         </tr>
                     </tbody>

@@ -1,3 +1,4 @@
+@import url("http://fonts.googleapis.com/css?family=Noto+Sans|Arvo|Titillium+Web:400,300,200,600|Raleway:400,300,200,500,600");
 @-webkit-keyframes turns {
   0% {
     -webkit-transform: rotateZ(0deg);
@@ -58,9 +59,18 @@ html body {
   width: 100%;
   height: 100%;
   padding-top: 51px;
+  font-family: "Noto sans";
 }
 html body a {
   color: white;
+}
+html body h1,
+html body h2,
+html body h3,
+html body h4,
+html body h5,
+html body h6 {
+  font-family: "Titillium Web";
 }
 html body #site-top-navbar {
   background: #22313f;
@@ -72,6 +82,13 @@ html body #site-top-navbar #logo {
           animation: turns 4s ease-in 0 infinite;
 }
 html body #site-top-navbar .navbar-text {
+  color: white;
+}
+html body #site-top-navbar .navbar-brand {
+  -webkit-transition: color 0.33s linear;
+          transition: color 0.33s linear;
+}
+html body #site-top-navbar .navbar-brand:hover {
   color: white;
 }
 html body #site-top-navbar #about-link {
@@ -100,12 +117,16 @@ html body #main-container .sidebar {
   padding-top: 51px;
   color: white;
   background: #22313f;
+  font-family: "Titillium Web";
 }
 html body #main-container .sidebar .top-bordered {
   border-top: 1px solid white;
 }
 html body #main-container .sidebar .bottom-bordered {
   border-bottom: 1px solid white;
+}
+html body #main-container .sidebar #deconnection-link-wrapper {
+  margin: 20px 0 0 0;
 }
 html body #main-container #site-content-wrapper {
   position: relative;
@@ -166,6 +187,10 @@ html body #main-container #site-content-wrapper .pie-chart-wrapper {
 html body #main-container #site-content-wrapper form .checkbox input,
 html body #main-container #site-content-wrapper form .radio input {
   margin-left: 0;
+}
+html body #main-container #site-content-wrapper .panel.panel-transparent {
+  background: transparent;
+  border: 1px solid white;
 }
 
 /*!
