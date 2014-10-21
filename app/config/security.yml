@@ -29,6 +29,10 @@ security:
             pattern: ^/subscription$
             security: false
 
+        dashboard_about:
+            pattern: ^/about$
+            security: false
+
         dashboard:
             pattern: ^/
             provider: users
@@ -49,6 +53,4 @@ security:
                 invalidate_session: false
 
     access_control:
-        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/subscription, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/, roles: ROLE_DRIVER }

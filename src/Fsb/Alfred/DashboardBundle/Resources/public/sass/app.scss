@@ -8,6 +8,7 @@ $sidebar-background: rgb(34, 49, 63);
 $sidebar-color: rgb(255, 255, 255);
 $navbar-background: rgb(34, 49, 63);
 $navbar-border: rgb(255, 255, 255);
+$navbar-color: rgb(255, 255, 255);
 
 @keyframes turns {
     0% {
@@ -41,8 +42,22 @@ html {
             background: $navbar-background;
             border-color: $navbar-border;
             #logo {
-                margin: 8px 0 7px 20px;
+                margin: 8px 0 7px 10px;
                 animation: turns 4s ease-in 0 infinite;
+            }
+            .navbar-text {
+                color: $navbar-color;
+            }
+            #about-link {
+                height: 50px;
+                margin: 0;
+                padding: 0;
+                line-height: 50px;
+                font-size: 1em;
+                transition: all 0.33s ease-out;
+                &:hover {
+                    font-size: 1.8em;
+                }
             }
         }
         #main-container {

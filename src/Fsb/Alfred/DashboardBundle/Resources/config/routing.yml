@@ -26,6 +26,13 @@ fsb_alfred_dashboard_page_profile:
     requirements:
         _method: get|post
 
+fsb_alfred_dashboard_page_about:
+    path:     /about
+    defaults:
+        _controller: FsbAlfredDashboardBundle:Pages/About:index
+    requirements:
+        _method: get
+
 fsb_alfred_dashboard_page_login_check:
     path:     /login_check
     requirements:

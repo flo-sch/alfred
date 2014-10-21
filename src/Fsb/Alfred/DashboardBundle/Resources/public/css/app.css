@@ -67,9 +67,24 @@ html body #site-top-navbar {
   border-color: white;
 }
 html body #site-top-navbar #logo {
-  margin: 8px 0 7px 20px;
+  margin: 8px 0 7px 10px;
   -webkit-animation: turns 4s ease-in 0 infinite;
           animation: turns 4s ease-in 0 infinite;
+}
+html body #site-top-navbar .navbar-text {
+  color: white;
+}
+html body #site-top-navbar #about-link {
+  height: 50px;
+  margin: 0;
+  padding: 0;
+  line-height: 50px;
+  font-size: 1em;
+  -webkit-transition: all 0.33s ease-out;
+          transition: all 0.33s ease-out;
+}
+html body #site-top-navbar #about-link:hover {
+  font-size: 1.8em;
 }
 html body #main-container {
   width: 100%;

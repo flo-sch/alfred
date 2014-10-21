@@ -2,25 +2,31 @@
 
 {% block navbar %}
     {{ parent() }}
-    <button type='button' class='navbar-toggle visible-xs visible-sm visible-md visible-lg' data-toggle='offcanvas' data-target='#site-content-wrapper'>
-        <span class='icon-bar'></span>
-        <span class='icon-bar'></span>
-        <span class='icon-bar'></span>
-    </button>
+    {% if app.user and is_granted('ROLE_DRIVER') %}
+        <button type='button' class='navbar-toggle visible-xs visible-sm visible-md visible-lg' data-toggle='offcanvas' data-target='#site-content-wrapper'>
+            <span class='icon-bar'></span>
+            <span class='icon-bar'></span>
+            <span class='icon-bar'></span>
+        </button>
+    {% endif %}
 {% endblock %}
 
 {% block pre_wrapper %}
-    <aside class='sidebar' role='navigation'>
-        <ul class='nav' id='sidebar-nav'>
-            <li><h4 class='text-center'>{{ app.user.carName }}</h4></li>
-            <li class='top-bordered bottom-bordered'><a href='{{ path('fsb_alfred_dashboard_homepage') }}'><span class='icon icon-pie-chart'></span> Statistiques</a></li>
-            <li><a href='{{ path('fsb_alfred_dashboard_page_gasoil') }}'><span class='icon icon-credit-card'></span> Carburant</a></li>
-            <li><a href='{{ path('fsb_alfred_dashboard_page_reparation') }}'><span class='icon icon-wrench'></span> Réparations</a></li>
-            <li><a href='{{ path('fsb_alfred_dashboard_page_highway') }}'><span class='icon icon-money'></span> Trajets</a></li>
-            <li><a href='{{ path('fsb_alfred_dashboard_page_insurance_fee') }}'><span class='icon icon-archive'></span> Assurance</a></li>
-            <li class='top-bordered bottom-bordered'><a href='{{ path('fsb_alfred_dashboard_page_profile') }}'><span class='icon icon-user'></span> Profil</a></li>
-        </ul>
-    </aside>
+    {{ parent() }}
+    {% if app.user and is_granted('ROLE_DRIVER') %}
+        <aside class='sidebar' role='navigation'>
+            <ul class='nav' id='sidebar-nav'>
+                <li><h4 class='text-center'>{{ app.user.carName }}</h4></li>
+                <li class='top-bordered bottom-bordered'><a href='{{ path('fsb_alfred_dashboard_homepage') }}'><span class='icon icon-pie-chart'></span> Statistiques</a></li>
+                <li><a href='{{ path('fsb_alfred_dashboard_page_gasoil') }}'><span class='icon icon-credit-card'></span> Carburant</a></li>
+                <li><a href='{{ path('fsb_alfred_dashboard_page_reparation') }}'><span class='icon icon-wrench'></span> Réparations</a></li>
+                <li><a href='{{ path('fsb_alfred_dashboard_page_highway') }}'><span class='icon icon-money'></span> Trajets</a></li>
+                <li><a href='{{ path('fsb_alfred_dashboard_page_insurance_fee') }}'><span class='icon icon-archive'></span> Assurance</a></li>
+                <li class='top-bordered bottom-bordered'><a href='{{ path('fsb_alfred_dashboard_page_profile') }}'><span class='icon icon-user'></span> Profil</a></li>
+                <li class='top-bordered bottom-bordered'><a href='{{ path('fsb_alfred_dashboard_page_logout') }}'><span class='icon icon-power-off'></span> Déconnexion</a></li>
+            </ul>
+        </aside>
+    {% endif %}
 {% endblock %}
 
 {% block javascripts %}
