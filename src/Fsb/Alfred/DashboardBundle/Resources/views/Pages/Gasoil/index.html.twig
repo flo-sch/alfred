@@ -8,7 +8,9 @@
     <ul class='nav nav-tabs'>
         <li class='active'><a href='#list' data-toggle='tab' class='btn btn-default'>Liste</a></li>
         <li><a href='#form' data-toggle='tab' class='btn btn-default'>Ajouter</a></li>
-        <li><a href='#statistiques' data-toggle='tab' class='btn btn-default'>Statistiques</a></li>
+        {% if gasoils|length > 1 %}
+            <li><a href='#statistiques' data-toggle='tab' class='btn btn-default'>Statistiques</a></li>
+        {% endif %}
     </ul>
     <div class='tab-content'>
         <div class='tab-pane active table-responsive' id='list'>
@@ -119,12 +121,13 @@
                 </div>
             </form>
         </div>
-        <div class='tab-pane' id='statistiques'>
-            <h4>Statistiques</h4>
-            <hr />
-            <canvas id='gasoil-chart' class='chart'></canvas>
-            <h5>Consommation moyenne : {{ (100 * (totalCapacity - gasoils|last.capacity) / (gasoils|last.kilometers - gasoils|first.kilometers))|number_format(2, '.', ' ') }} L / 100 kms</h5>
-        </div>
+        {% if gasoils|length > 1 %}
+            <div class='tab-pane' id='statistiques'>
+                <h4>Statistiques <b class='pull-right'>Consommation moyenne : <span class='badge badge-info'>{{ (100 * (totalCapacity - gasoils|last.capacity) / (gasoils|last.kilometers - gasoils|first.kilometers))|number_format(2, '.', ' ') }} L / 100 kms</span></b></h4>
+                <hr />
+                <canvas id='gasoil-chart' class='chart'></canvas>
+            </div>
+        {% endif %}
     </div>
 {% endblock %}
 
@@ -148,35 +151,50 @@
     {% if gasoils|length > 1 %}
         <script src='{{ asset('bundles/fsbalfreddashboard/js/vendor/chart.js') }}'></script>
         <script>
+            Chart.defaults.global.responsive = !0;
+            var $canvas = $('#gasoil-chart'),
+                context = $canvas.get(0).getContext('2d'),
+                gasoilChart;
+            var drawChart = function ($canvas) {
+                $canvas.removeAttr('width').removeAttr('height').prop({
+                    width: $canvas.closest('.tab-content').width(),
+                    height: 280
+                });
+                gasoilChart = new Chart(context).Line({
+                    'labels': [
+                        {% for gasoil in gasoils %}
+                            '{{ gasoil.createdAt|date('d-m-Y') }}'{% if not loop.last %},{% endif %}
+                        {% endfor %}
+                    ],
+                    'datasets': [
+                        {
+                            'label': 'Montant',
+                            'fillColor': 'rgba(220,220,220,0.2)',
+                            'strokeColor': 'rgba(220,220,220,1)',
+                            'pointColor': 'rgba(220,220,220,1)',
+                            'pointStrokeColor': '#ccc',
+                            'pointHighlightFill': 'rgb(0, 0, 0)',
+                            'pointHighlightStroke': 'rgba(220,220,220,1)',
+                            'data': [
+                                {% for gasoil in gasoils %}{{ gasoil.amount|number_format(2, '.', ',') }}{% if not loop.last %},{% endif %}{% endfor %}
+                            ]
+                        }
+                    ]
+                }, {
+                    maintainAspectRatio: true,
+                    scaleFontColor: 'rgb(255,255,255)',
+                    scaleLabel: '<%=value%> €',
+                    tooltipFillColor: 'rgba(0, 0, 0, 0.95)',
+                    tooltipTemplate: {% raw %}'<%if (label){%><%=label%>: <%}%><%= value %> €'{% endraw %},
+                    tooltipEvents: ['mousemove', 'mousedown', 'touchstart', 'touchmove']
+                });
+            }
             $(function () {
-                var context = $('#gasoil-chart').get(0).getContext('2d'),
-                    gasoilChart = new Chart(context).Line({
-                        'labels': [
-                            {% for gasoil in gasoils %}
-                                '{{ gasoil.createdAt|date('d-m-Y') }}'{% if not loop.last %},{% endif %}
-                            {% endfor %}
-                        ],
-                        'datasets': [
-                            {
-                                'label': 'Montant',
-                                'fillColor': 'rgba(220,220,220,0.2)',
-                                'strokeColor': 'rgba(220,220,220,1)',
-                                'pointColor': 'rgba(220,220,220,1)',
-                                'pointStrokeColor': '#ccc',
-                                'pointHighlightFill': 'rgb(0, 0, 0)',
-                                'pointHighlightStroke': 'rgba(220,220,220,1)',
-                                'data': [
-                                    {% for gasoil in gasoils %}{{ gasoil.amount }}{% if not loop.last %},{% endif %}{% endfor %}
-                                ]
-                            }
-                        ]
-                    }, {
-                        maintainAspectRatio: true,
-                        scaleFontColor: 'rgb(255,255,255)',
-                        scaleLabel: "<%=value%> €",
-                        tooltipFillColor: 'rgba(0, 0, 0, 0.95)',
-                        tooltipEvents: ["mousemove", "mousedown", "touchstart", "touchmove"]
-                    });
+                setTimeout(function () {
+                    $(window).on('resize', function (event) {
+                        drawChart($canvas);
+                    }).trigger('resize');
+                }, 300);
             });
         </script>
     {% endif %}

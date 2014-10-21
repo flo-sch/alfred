@@ -27,7 +27,9 @@
         </div>
         <div class='col-lg-3 col-md-4 col-sm-6 col-xs-12'>
             <h4>Budget</h4>
-            <canvas id='global-chart' class='chart' width='400' height='400'></canvas>
+            <div class='pie-chart-wrapper'>
+                <canvas id='global-chart' class='chart'></canvas>
+            </div>
         </div>
     </div>
 {% endblock %}
@@ -36,36 +38,40 @@
     {{ parent() }}
     <script src='{{ asset('bundles/fsbalfreddashboard/js/vendor/chart.js') }}'></script>
     <script>
-        $(function () {
-            var context = $('#global-chart').get(0).getContext('2d'),
-                globalChart = new Chart(context).Pie([{
-                    value: {{ gasoilTotalCost|number_format(2, '.', ',') }},
-                    color: 'rgba(34, 49, 63, 0.15)',
-                    highlight: 'rgba(34, 49, 63, 0.85)',
-                    label: 'Gasoil'
-                }, {
-                    value: {{ highwayTotalCost|number_format(2, '.', ',') }},
-                    color: 'rgba(34, 49, 63, 0.15)',
-                    highlight: 'rgba(34, 49, 63, 0.85)',
-                    label: 'Highways'
-                }, {
-                    value: {{ reparationsTotalCost|number_format(2, '.', ',') }},
-                    color: 'rgba(34, 49, 63, 0.15)',
-                    highlight: 'rgba(34, 49, 63, 0.85)',
-                    label: 'Réparations'
-                }, {
-                    value: {{ insuranceFeesTotalCost|number_format(2, '.', ',') }},
-                    color: 'rgba(34, 49, 63, 0.15)',
-                    highlight: 'rgba(34, 49, 63, 0.85)',
-                    label: 'Insurance Fees'
-                }], {
-                    responsive: true,
-                    maintainAspectRatio: true,
-                    tooltipFillColor: 'rgba(0, 0, 0, 0.95)',
-                    tooltipTemplate: {% raw %}'<%if (label){%><%=label%>: <%}%><%= value %>€'{% endraw %},
-                    tooltipEvents: ['mousemove', 'mousedown', 'touchstart', 'touchmove'],
-                    animationEasing: 'easeOutCirc'
-                });
+        Chart.defaults.global.responsive = !0;
+        var $canvas = $('#global-chart'), context, globalChart;
+        $canvas.prop({
+            width: $canvas.parent().width(),
+            height: 200
+        });
+        context = $canvas.get(0).getContext('2d');
+        globalChart = new Chart(context).Pie([{
+            value: {{ gasoilTotalCost|number_format(2, '.', ',') }},
+            color: 'rgba(34, 49, 63, 0.15)',
+            highlight: 'rgba(34, 49, 63, 0.85)',
+            label: 'Gasoil'
+        }, {
+            value: {{ highwayTotalCost|number_format(2, '.', ',') }},
+            color: 'rgba(34, 49, 63, 0.15)',
+            highlight: 'rgba(34, 49, 63, 0.85)',
+            label: 'Highways'
+        }, {
+            value: {{ reparationsTotalCost|number_format(2, '.', ',') }},
+            color: 'rgba(34, 49, 63, 0.15)',
+            highlight: 'rgba(34, 49, 63, 0.85)',
+            label: 'Réparations'
+        }, {
+            value: {{ insuranceFeesTotalCost|number_format(2, '.', ',') }},
+            color: 'rgba(34, 49, 63, 0.15)',
+            highlight: 'rgba(34, 49, 63, 0.85)',
+            label: 'Insurance Fees'
+        }], {
+            responsive: true,
+            maintainAspectRatio: true,
+            tooltipFillColor: 'rgba(0, 0, 0, 0.95)',
+            tooltipTemplate: {% raw %}'<%if (label){%><%=label%>: <%}%><%= value %>€'{% endraw %},
+            tooltipEvents: ['mousemove', 'mousedown', 'touchstart', 'touchmove'],
+            animationEasing: 'easeOutCirc'
         });
     </script>
 {% endblock %}

@@ -8,7 +8,9 @@
     <ul class='nav nav-tabs'>
         <li class='active'><a href='#list' data-toggle='tab' class='btn btn-default'>Liste</a></li>
         <li><a href='#form' data-toggle='tab' class='btn btn-default'>Ajouter</a></li>
-        <li><a href='#statistiques' data-toggle='tab' class='btn btn-default'>Statistiques</a></li>
+        {% if reparations|length > 1 %}
+            <li><a href='#statistiques' data-toggle='tab' class='btn btn-default'>Statistiques</a></li>
+        {% endif %}
     </ul>
     <div class='tab-content'>
         <div class='tab-pane active table-responsive' id='list'>
@@ -113,11 +115,13 @@
                 </div>
             </form>
         </div>
-        <div class='tab-pane' id='statistiques'>
-            <h4>Statistiques</h4>
-            <hr />
-            <canvas id='reparation-chart' class='chart'></canvas>
-        </div>
+        {% if reparations|length > 1 %}
+            <div class='tab-pane' id='statistiques'>
+                <h4>Statistiques</h4>
+                <hr />
+                <canvas id='reparation-chart' class='chart'></canvas>
+            </div>
+        {% endif %}
     </div>
 {% endblock %}
 
@@ -141,35 +145,50 @@
     {% if reparations|length > 1 %}
         <script src='{{ asset('bundles/fsbalfreddashboard/js/vendor/chart.js') }}'></script>
         <script>
+            Chart.defaults.global.responsive = !0;
+            var $canvas = $('#reparation-chart'),
+                context = $canvas.get(0).getContext('2d'),
+                reparationChart;
+            var drawChart = function ($canvas) {
+                $canvas.removeAttr('width').removeAttr('height').prop({
+                    width: $canvas.closest('.tab-content').width(),
+                    height: 280
+                });
+                reparationChart = new Chart(context).Line({
+                    'labels': [
+                        {% for reparation in reparations %}
+                            '{{ reparation.createdAt|date('d-m-Y') }}'{% if not loop.last %},{% endif %}
+                        {% endfor %}
+                    ],
+                    'datasets': [
+                        {
+                            'label': 'Montant',
+                            'fillColor': 'rgba(220,220,220,0.2)',
+                            'strokeColor': 'rgba(220,220,220,1)',
+                            'pointColor': 'rgba(220,220,220,1)',
+                            'pointStrokeColor': '#ccc',
+                            'pointHighlightFill': 'rgb(0, 0, 0)',
+                            'pointHighlightStroke': 'rgba(220,220,220,1)',
+                            'data': [
+                                {% for reparation in reparations %}{{ reparation.amount }}{% if not loop.last %},{% endif %}{% endfor %}
+                            ]
+                        }
+                    ]
+                }, {
+                    maintainAspectRatio: true,
+                    scaleFontColor: 'rgb(255,255,255)',
+                    scaleLabel: '<%=value%> €',
+                    tooltipFillColor: 'rgba(0, 0, 0, 0.95)',
+                    tooltipTemplate: {% raw %}'<%if (label){%><%=label%>: <%}%><%= value %> €'{% endraw %},
+                    tooltipEvents: ['mousemove', 'mousedown', 'touchstart', 'touchmove']
+                });
+            }
             $(function () {
-                var context = $('#reparation-chart').get(0).getContext('2d'),
-                    reparationChart = new Chart(context).Line({
-                        'labels': [
-                            {% for reparation in reparations %}
-                                '{{ reparation.createdAt|date('d-m-Y') }}'{% if not loop.last %},{% endif %}
-                            {% endfor %}
-                        ],
-                        'datasets': [
-                            {
-                                'label': 'Montant',
-                                'fillColor': 'rgba(220,220,220,0.2)',
-                                'strokeColor': 'rgba(220,220,220,1)',
-                                'pointColor': 'rgba(220,220,220,1)',
-                                'pointStrokeColor': '#ccc',
-                                'pointHighlightFill': 'rgb(0, 0, 0)',
-                                'pointHighlightStroke': 'rgba(220,220,220,1)',
-                                'data': [
-                                    {% for reparation in reparations %}{{ reparation.amount }}{% if not loop.last %},{% endif %}{% endfor %}
-                                ]
-                            }
-                        ]
-                    }, {
-                        maintainAspectRatio: true,
-                        tooltipFillColor: 'rgba(0, 0, 0, 0.95)',
-                        scaleFontColor: 'rgb(255,255,255)',
-                        scaleLabel: "<%=value%> €",
-                        tooltipEvents: ["mousemove", "mousedown", "touchstart", "touchmove"]
-                    });
+                setTimeout(function () {
+                    $(window).on('resize', function (event) {
+                        drawChart($canvas);
+                    }).trigger('resize');
+                }, 300);
             });
         </script>
     {% endif %}
