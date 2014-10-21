@@ -13,30 +13,118 @@
         <br />
         Même s'il ne va jamais revendre ou donner vos données à qui que ce soit, ne prenez cette sale habitude d'en dire trop sur vous sur Internet !
     </p>
-    <h4>Comment vit Alfred ?</h4>
+    <h4>Que se passe-t-il dans Alfred ? <small><i>Tu ne veux pas le savoir...</i></small></h4>
     <div id='how-to-use-accordion' class='panel-group'>
         <div class='panel panel-transparent'>
             <div class='panel-heading'>
                 <h4 class='panel-title'>
-                    <a data-toggle='collapse' data-parent='how-to-use-accordion' href='#account'>Compte</a>
+                    <a data-toggle='collapse' data-parent='how-to-use-accordion' href='#account'>Encore un compte ?</a>
                 </h4>
             </div>
             <div id='account' class='panel-collapse collapse in'>
                 <div class='panel-body text-justify'>
-                    <p>Oui, Alfred le sait lui-même mieux que quiconque, c'est toujours très pénible de devoir créer un compte sur chaque site que l'on visite.</p>
-                    <p>Mais bon, d'un côté, Alfred gère jusque 3.18x10<sup>9</sup> voitures en même temps alors... Il faut toujours le remettre dans le contexte.</p>
-                    <p>Vous ne voudriez pas qu'il confonde votre voiture avec celle d'un autre, n'est-ce pas ?</p>
+                    <p>
+                        Oui, Alfred le sait lui-même mieux que quiconque, c'est toujours très pénible de devoir créer un compte sur chaque site que l'on visite.
+                        <br />Mais bon, d'un côté, Alfred gère jusque 3.18x10<sup>9</sup> voitures en même temps alors... Il faut toujours le remettre dans le contexte.
+                        <br />Vous ne voudriez pas qu'il confonde votre voiture avec celle d'un autre, n'est-ce pas ?
+                    </p>
                 </div>
             </div>
         </div>
         <div class='panel panel-transparent'>
             <div class='panel-heading'>
                 <h4 class='panel-title'>
-                    <a data-toggle='collapse' data-parent='how-to-use-accordion' href='#profile'>Profil</a>
+                    <a data-toggle='collapse' data-parent='how-to-use-accordion' href='#profile'>Un profil de quoi ?</a>
                 </h4>
             </div>
             <div id='profile' class='panel-collapse collapse'>
                 <div class='panel-body text-justify'>
+                    <p>
+                        Vous n'êtes pas obligé d'exploiter Alfred à 100%, cela soulagera ses vieux jours...
+                        <br />Sur la page <a href='{{ path('fsb_alfred_dashboard_page_profile') }}'>profil</a>, vous pouvez indiquer ce que vous souhaitez qu'il calcule ou non.
+                        <br />Vous pouvez également repeindre Alfred, ou changer le nom de votre voiture (ce dont Alfred se fiche pas mal, au fond, mais c'est purement pour la forme !)
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class='panel panel-transparent'>
+            <div class='panel-heading'>
+                <h4 class='panel-title'>
+                    <a data-toggle='collapse' data-parent='how-to-use-accordion' href='#management'>Et ça gère quoi ?</a>
+                </h4>
+            </div>
+            <div id='management' class='panel-collapse collapse'>
+                <div class='panel-body text-justify'>
+                    <p>Alfred vous permet de gérer plusieurs choses :</p>
+                    <ul>
+                        <li>Le carburant</li>
+                        <li>L'autoroute</li>
+                        <li>L'assurance</li>
+                        <li>Les réparations</li>
+                    </ul>
+                    <p>Chaque dépense étant indépendante, vous pouvez vous-même décider qu'Alfred les gère, ou non.</p>
+                </div>
+            </div>
+        </div>
+        <div class='panel panel-transparent'>
+            <div class='panel-heading'>
+                <h4 class='panel-title'>
+                    <a data-toggle='collapse' data-parent='how-to-use-accordion' href='#calculations'>Mais les calculs... ?</a>
+                </h4>
+            </div>
+            <div id='calculations' class='panel-collapse collapse'>
+                <div class='panel-body text-justify'>
+                    <p>Alfred est à votre écoute. Tout le temps. Cependant, Alfred n'est pas magicien !</p>
+                    <p>Les calculs qu'il fait sont les mêmes que ceux que vous pourriez faire... Sauf si vous avez la flemme. Et quand on a assez d'argent pour avoir une voiture, souvent, on a la flemme.</p>
+                    <h5><strong>A propos des kilomètres</strong></h5>
+                    <p>
+                        Les coûts au kilomètre sont calculés par rapport à la différence du kilométrage initial de votre voiture et son kilométrage actuel :
+                        <br />Si vous avez acheté une voiture ayant 35000kms et qu'elle en a désormais parcouru 74000, le coût par kilomètre représente le coût sur les 39000kms que <strong>vous</strong> avez parcouru avec.
+                        <br />En effet, cela n'inclut pas le prix d'achat de votre voiture, qui - à la différence d'Alfred - vous regarde totalement.
+                        <br /><i>Et c'est quand même pas si dur de faire une addition, non ?</i>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class='panel panel-transparent'>
+            <div class='panel-heading'>
+                <h4 class='panel-title'>
+                    <a data-toggle='collapse' data-parent='how-to-use-accordion' href='#coordinates'>Pourquoi des coordonnées GPS ?</a>
+                </h4>
+            </div>
+            <div id='coordinates' class='panel-collapse collapse'>
+                <div class='panel-body text-justify'>
+                    <p>Juste pour vous permettre, dans un futur proche, de visualiser vos déplacements et les dépenses les moins chères, géographiquement.</p>
+                    <p>
+                        Non, Alfred ne vous suivra pas, demain, tout nu, sous un imperméable complet.
+                        <br />D'ailleurs, ces coordonnées sont optionelles. Libre à vous de les ignorer.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class='panel panel-transparent'>
+            <div class='panel-heading'>
+                <h4 class='panel-title'>
+                    <a data-toggle='collapse' data-parent='how-to-use-accordion' href='#private-life'>Et ma vie privée dans tout ça ?</a>
+                </h4>
+            </div>
+            <div id='private-life' class='panel-collapse collapse'>
+                <div class='panel-body text-justify'>
+                    <p>Alfred ne fournira <strong>jamais</strong> vos données à une grande multinationale ou même à qui que ce soit car :</p>
+                    <ul>
+                        <li>Il vous offre un service gratuit</li>
+                        <li>Il ne se nourrit que d'amour et d'eau fraiche</li>
+                        <li>Il ne sait pas qui vous êtes</li>
+                        <li>Il ne sait pas qui vous êtes</li>
+                        <li>Il ne sait pas qui vous êtes</li>
+                        <li>Il ne sait pas qui vous êtes</li>
+                        <li>Il ne sait pas qui vous êtes</li>
+                        <li><u>Il ne doit pas savoir qui vous êtes</u></li>
+                        <li>Il a autre chose à faire</li>
+                        <li>Il préfère les paninis nutella</li>
+                        <li>Il joue au tarot</li>
+                        <li>Il a piscine, poney, flûte à bec, couture, foot etc... En même temps !</li>
+                    </ul>
                 </div>
             </div>
         </div>
