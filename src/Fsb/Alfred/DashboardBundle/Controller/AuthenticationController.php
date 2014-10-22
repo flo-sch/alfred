@@ -2,13 +2,12 @@
 
 namespace Fsb\Alfred\DashboardBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\SecurityContext;
 
 use Fsb\Alfred\CoreBundle\Entity\Driver;
 use Fsb\Alfred\DashboardBundle\Form\SubscriptionType;
 
-class AuthenticationController extends Controller
+class AuthenticationController extends FrontController
 {
     public function loginAction()
     {
@@ -42,14 +41,9 @@ class AuthenticationController extends Controller
                 $driver->setUsername($driver->getEmail());
                 $em = $this->getDoctrine()->getManager();
 
-                $factory = $this->get('security.encoder_factory');
-                $encoder = $factory->getEncoder($driver);
-
-                $password = $encoder->encodePassword($driver->getPassword(), $driver->getSalt());
-                $driver->setPassword($password);
+                $driver->setPassword($this->encryptPassword($driver, $driver->getPassword(), $driver->getSalt()));
 
                 $em->persist($driver);
-
                 $em->flush();
 
                 $request->getSession()->getFlashBag()->add('success', 'Merci ! Vous pouvez dès à présent utiliser Alfred :)');

@@ -26,6 +26,13 @@ fsb_alfred_dashboard_page_profile:
     requirements:
         _method: get|post
 
+fsb_alfred_dashboard_page_edit_password:
+    path:     /profile/edit-password
+    defaults:
+        _controller: FsbAlfredDashboardBundle:Pages/Profile:editPassword
+    requirements:
+        _method: get|post
+
 fsb_alfred_dashboard_page_about:
     path:     /about
     defaults:

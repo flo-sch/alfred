@@ -142,6 +142,23 @@ class Driver implements AdvancedUserInterface, Serializable
     private $currentKilometers;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="lost_password_token", type="string", nullable=true)
+     */
+    private $lostPasswordToken;
+
+    /**
+     * @var string
+     */
+    private $currentPassword;
+
+    /**
+     * @var string
+     */
+    private $newPassword;
+
+    /**
      * Public constructor
      *
      * @return User
@@ -588,6 +605,75 @@ class Driver implements AdvancedUserInterface, Serializable
     public function getCurrentKilometers()
     {
         return $this->currentKilometers;
+    }
+
+    /**
+     * Set lostPasswordToken
+     *
+     * @param string $lostPasswordToken
+     * @return Driver
+     */
+    public function setLostPasswordToken($lostPasswordToken)
+    {
+        $this->lostPasswordToken = $lostPasswordToken;
+
+        return $this;
+    }
+
+    /**
+     * Get lostPasswordToken
+     *
+     * @return string
+     */
+    public function getLostPasswordToken()
+    {
+        return $this->lostPasswordToken;
+    }
+
+    /**
+     * Get currentPassword
+     *
+     * @return string
+     */
+    public function getCurrentPassword()
+    {
+        return $this->currentPassword;
+    }
+
+    /**
+     * Set currentPassword
+     *
+     * @param string $currentPassword
+     * @return Driver
+     */
+    public function setCurrentPassword($currentPassword)
+    {
+        $this->currentPassword = $currentPassword;
+
+        return $this;
+    }
+
+    /**
+     * Get newPassword
+     *
+     * @return string
+     */
+    public function getNewPassword()
+    {
+        return $this->newPassword;
+    }
+
+    /**
+     * Set newPassword
+     *
+     * @param string $newPassword
+     * @return Driver
+     */
+    public function setNewPassword($newPassword)
+    {
+        $this->newPassword = $newPassword;
+
+        return $this;
     }
 
     /**
