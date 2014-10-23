@@ -48,4 +48,5 @@ security:
         - { path: ^/about, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/lost-password, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/reset-password, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/subscription, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/, roles: ROLE_DRIVER }
