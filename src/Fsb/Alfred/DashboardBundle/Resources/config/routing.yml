@@ -33,6 +33,20 @@ fsb_alfred_dashboard_page_edit_password:
     requirements:
         _method: get|post
 
+fsb_alfred_dashboard_page_lost_password:
+    path:     /lost-password
+    defaults:
+        _controller: FsbAlfredDashboardBundle:Authentication:lostPassword
+    requirements:
+        _method: get|post
+
+fsb_alfred_dashboard_page_reset_password:
+    path:     /reset-password/{username}/{token}
+    defaults:
+        _controller: FsbAlfredDashboardBundle:Authentication:resetPassword
+    requirements:
+        _method: get|post
+
 fsb_alfred_dashboard_page_about:
     path:     /about
     defaults:

@@ -21,4 +21,9 @@ class FrontController extends Controller
 
         return $encryptedPassword;
     }
+
+    protected function generateToken()
+    {
+        return sha1(uniqid(mt_rand(), true));
+    }
 }

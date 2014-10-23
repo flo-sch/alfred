@@ -50,21 +50,21 @@ class Driver implements AdvancedUserInterface, Serializable
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=255, unique=true, nullable=true)
+     * @ORM\Column(name="username", type="string", length=255, unique=true, nullable=true)
      */
     private $username;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=40)
+     * @ORM\Column(name="salt", type="string", length=40)
      */
     private $salt;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(name="password", type="string", length=255)
      * @Constraints\NotBlank()
      */
     private $password;
@@ -72,7 +72,7 @@ class Driver implements AdvancedUserInterface, Serializable
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=60, unique=true)
+     * @ORM\Column(name="email", type="string", length=60, unique=true)
      * @Constraints\NotBlank()
      * @Constraints\Email()
      */
@@ -81,14 +81,14 @@ class Driver implements AdvancedUserInterface, Serializable
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=100, nullable=true)
+     * @ORM\Column(name="car_name", type="string", length=100, nullable=true)
      */
     private $carName;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=100, nullable=true)
+     * @ORM\Column(name="color", type="string", length=100, nullable=true)
      */
     private $color;
 
@@ -144,7 +144,7 @@ class Driver implements AdvancedUserInterface, Serializable
     /**
      * @var string
      *
-     * @ORM\Column(name="lost_password_token", type="string", nullable=true)
+     * @ORM\Column(name="lost_password_token", type="string", length=40, nullable=true)
      */
     private $lostPasswordToken;
 

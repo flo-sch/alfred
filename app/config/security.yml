@@ -25,14 +25,10 @@ security:
             pattern: ^/login$
             security: false
 
-        dashboard_subscription:
-            pattern: ^/subscription$
-            security: false
-
         dashboard:
             pattern: ^/
             provider: users
-            anonymous: false
+            anonymous: true
             form_login:
                 login_path: fsb_alfred_dashboard_page_login
                 check_path: fsb_alfred_dashboard_page_login_check
@@ -50,4 +46,6 @@ security:
 
     access_control:
         - { path: ^/about, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/lost-password, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/reset-password, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/, roles: ROLE_DRIVER }

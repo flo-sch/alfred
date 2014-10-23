@@ -35,6 +35,6 @@ class DriverPasswordType extends AbstractType
      */
     public function getName()
     {
-        return 'fsb_alfred_dashboard_edit_password_type';
+        return 'fsb_alfred_dashboard_driver_password_type';
     }
 }
