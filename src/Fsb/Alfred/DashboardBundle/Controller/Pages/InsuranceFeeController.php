@@ -12,16 +12,17 @@ class InsuranceFeeController extends FrontController
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
+        $driver = $this->getUser();
 
         $insuranceFee = new InsuranceFee();
         $form = $this->createForm(new InsuranceFeeType(), $insuranceFee);
 
-        $insuranceFees = $em->getRepository('FsbAlfredCoreBundle:InsuranceFee')->findAll();
+        $insuranceFees = $em->getRepository('FsbAlfredCoreBundle:InsuranceFee')->findAllForDriver($driver);
 
         return $this->render('FsbAlfredDashboardBundle:Pages/InsuranceFee:index.html.twig', array(
             'insuranceFees' => $insuranceFees,
             'form' => $form->createView(),
-            'totalPrice' => $em->getRepository('FsbAlfredCoreBundle:InsuranceFee')->getTotalPrice()
+            'totalPrice' => $em->getRepository('FsbAlfredCoreBundle:InsuranceFee')->getTotalPriceForDriver($driver)
         ));
     }
 
@@ -46,6 +47,7 @@ class InsuranceFeeController extends FrontController
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $insuranceFee->setDriver($this->getUser());
             $em->persist($insuranceFee);
             $em->flush();
 

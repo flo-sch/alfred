@@ -26,7 +26,22 @@ class HighwayRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    public function getTotalPrice()
+    public function findAllForDriver($driver)
+    {
+        $qb = $this->_em->createQueryBuilder();
+
+        $qb->select('h')
+            ->from('FsbAlfredCoreBundle:Highway', 'h')
+            ->where($qb->expr()->eq('h.isHidden', ':isHidden'))
+            ->andWhere($qb->expr()->eq('h.driver', ':driver'))
+            ->setParameter('isHidden', false)
+            ->setParameter('driver', $driver)
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function getTotalPriceForDriver($driver)
     {
         $price = 0;
 
@@ -35,7 +50,9 @@ class HighwayRepository extends EntityRepository
         $qb->select('SUM(h.price) price')
             ->from('FsbAlfredCoreBundle:Highway', 'h')
             ->where($qb->expr()->eq('h.isHidden', ':isHidden'))
+            ->andWhere($qb->expr()->eq('h.driver', ':driver'))
             ->setParameter('isHidden', false)
+            ->setParameter('driver', $driver)
         ;
 
         try {

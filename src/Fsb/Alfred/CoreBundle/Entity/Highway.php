@@ -67,6 +67,12 @@ class Highway
     private $price;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Driver")
+     * @ORM\JoinColumn(name="driver_id", referencedColumnName="id")
+     */
+    private $driver;
+
+    /**
      * Public constructor
      *
      * @return Highway
@@ -248,5 +254,27 @@ class Highway
     public function getPrice()
     {
         return $this->price;
+    }
+
+    /**
+     * Set driver
+     *
+     * @return Highway
+     */
+    public function setDriver($driver)
+    {
+        $this->driver = $driver;
+
+        return $this;
+    }
+
+    /**
+     * Get driver
+     *
+     * @return Driver
+     */
+    public function getDriver()
+    {
+        return $this->driver;
     }
 }

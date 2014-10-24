@@ -102,6 +102,12 @@ class Reparation
     private $longitude;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Driver")
+     * @ORM\JoinColumn(name="driver_id", referencedColumnName="id")
+     */
+    private $driver;
+
+    /**
      * Public constructor
      *
      * @return Reparation
@@ -398,5 +404,27 @@ class Reparation
     public function getLongitude()
     {
         return $this->longitude;
+    }
+
+    /**
+     * Set driver
+     *
+     * @return Reparation
+     */
+    public function setDriver($driver)
+    {
+        $this->driver = $driver;
+
+        return $this;
+    }
+
+    /**
+     * Get driver
+     *
+     * @return Driver
+     */
+    public function getDriver()
+    {
+        return $this->driver;
     }
 }

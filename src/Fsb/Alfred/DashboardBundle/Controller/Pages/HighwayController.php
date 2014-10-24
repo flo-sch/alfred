@@ -12,16 +12,17 @@ class HighwayController extends FrontController
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
+        $driver = $this->getUser();
 
         $highway = new Highway();
         $form = $this->createForm(new HighwayType(), $highway);
 
-        $highways = $em->getRepository('FsbAlfredCoreBundle:Highway')->findAll();
+        $highways = $em->getRepository('FsbAlfredCoreBundle:Highway')->findAllForDriver($driver);
 
         return $this->render('FsbAlfredDashboardBundle:Pages/Highway:index.html.twig', array(
             'highways' => $highways,
             'form' => $form->createView(),
-            'totalPrice' => $em->getRepository('FsbAlfredCoreBundle:Highway')->getTotalPrice()
+            'totalPrice' => $em->getRepository('FsbAlfredCoreBundle:Highway')->getTotalPriceForDriver($driver)
         ));
     }
 
@@ -46,6 +47,7 @@ class HighwayController extends FrontController
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $highway->setDriver($this->getUser());
             $em->persist($highway);
             $em->flush();
 

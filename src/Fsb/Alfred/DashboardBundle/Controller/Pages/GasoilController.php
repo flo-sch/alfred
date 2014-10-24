@@ -12,18 +12,19 @@ class GasoilController extends FrontController
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
+        $driver = $this->getUser();
 
         $gasoil = new Gasoil();
         $form = $this->createForm(new GasoilType(), $gasoil);
 
-        $gasoils = $em->getRepository('FsbAlfredCoreBundle:Gasoil')->findAll();
+        $gasoils = $em->getRepository('FsbAlfredCoreBundle:Gasoil')->findAllForDriver($driver);
 
         return $this->render('FsbAlfredDashboardBundle:Pages/Gasoil:index.html.twig', array(
             'gasoils' => $gasoils,
             'form' => $form->createView(),
-            'totalPrice' => $em->getRepository('FsbAlfredCoreBundle:Gasoil')->getTotalPrice(),
-            'totalCapacity' => $em->getRepository('FsbAlfredCoreBundle:Gasoil')->getTotalCapacity(),
-            'totalAmount' => $em->getRepository('FsbAlfredCoreBundle:Gasoil')->getTotalAmount()
+            'totalPrice' => $em->getRepository('FsbAlfredCoreBundle:Gasoil')->getTotalPriceForDriver($driver),
+            'totalCapacity' => $em->getRepository('FsbAlfredCoreBundle:Gasoil')->getTotalCapacityForDriver($driver),
+            'totalAmount' => $em->getRepository('FsbAlfredCoreBundle:Gasoil')->getTotalAmountForDriver($driver)
         ));
     }
 
@@ -31,6 +32,7 @@ class GasoilController extends FrontController
     {
         $gasoil = new Gasoil();
         $form = $this->createForm(new GasoilType(), $gasoil);
+        $gasoil->setDriver($this->getUser());
 
         return $this->render('FsbAlfredDashboardBundle:Pages/Gasoil:new.html.twig', array(
             'form' => $form->createView()
@@ -43,13 +45,15 @@ class GasoilController extends FrontController
 
         $gasoil = new Gasoil();
         $form = $this->createForm(new GasoilType(), $gasoil);
+        $gasoil->setDriver($this->getUser());
 
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($gasoil);
             $driver = $this->getUser();
+            $gasoil->setDriver($driver);
+            $em->persist($gasoil);
             $kilometers = $gasoil->getKilometers();
             if ($kilometers && $kilometers > $driver->getCurrentKilometers()) {
                 $driver->setCurrentKilometers($kilometers);

@@ -26,7 +26,22 @@ class InsuranceFeeRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    public function getTotalPrice()
+    public function findAllForDriver($driver)
+    {
+        $qb = $this->_em->createQueryBuilder();
+
+        $qb->select('if')
+            ->from('FsbAlfredCoreBundle:InsuranceFee', 'if')
+            ->where($qb->expr()->eq('if.isHidden', ':isHidden'))
+            ->andWhere($qb->expr()->eq('if.driver', ':driver'))
+            ->setParameter('isHidden', false)
+            ->setParameter('driver', $driver)
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function getTotalPriceForDriver($driver)
     {
         $price = 0;
 
@@ -35,7 +50,9 @@ class InsuranceFeeRepository extends EntityRepository
         $qb->select('SUM(if.price) price')
             ->from('FsbAlfredCoreBundle:InsuranceFee', 'if')
             ->where($qb->expr()->eq('if.isHidden', ':isHidden'))
+            ->andWhere($qb->expr()->eq('if.driver', ':driver'))
             ->setParameter('isHidden', false)
+            ->setParameter('driver', $driver)
         ;
 
         try {

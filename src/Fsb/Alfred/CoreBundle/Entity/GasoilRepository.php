@@ -26,7 +26,22 @@ class GasoilRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    public function getTotalKilometers()
+    public function findAllForDriver($driver)
+    {
+        $qb = $this->_em->createQueryBuilder();
+
+        $qb->select('g')
+            ->from('FsbAlfredCoreBundle:Gasoil', 'g')
+            ->where($qb->expr()->eq('g.isHidden', ':isHidden'))
+            ->andWhere($qb->expr()->eq('g.driver', ':driver'))
+            ->setParameter('isHidden', false)
+            ->setParameter('driver', $driver)
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function getTotalKilometersForDriver($driver)
     {
         $kilometers = 0;
 
@@ -35,7 +50,9 @@ class GasoilRepository extends EntityRepository
         $qb->select('SUM(g.kilometers) kilometers')
             ->from('FsbAlfredCoreBundle:Gasoil', 'g')
             ->where($qb->expr()->eq('g.isHidden', ':isHidden'))
+            ->andWhere($qb->expr()->eq('g.driver', ':driver'))
             ->setParameter('isHidden', false)
+            ->setParameter('driver', $driver)
         ;
 
         try {
@@ -47,7 +64,7 @@ class GasoilRepository extends EntityRepository
         return $kilometers;
     }
 
-    public function getTotalPrice()
+    public function getTotalPriceForDriver($driver)
     {
         $price = 0;
 
@@ -56,7 +73,9 @@ class GasoilRepository extends EntityRepository
         $qb->select('SUM(g.price) price')
             ->from('FsbAlfredCoreBundle:Gasoil', 'g')
             ->where($qb->expr()->eq('g.isHidden', ':isHidden'))
+            ->andWhere($qb->expr()->eq('g.driver', ':driver'))
             ->setParameter('isHidden', false)
+            ->setParameter('driver', $driver)
         ;
 
         try {
@@ -68,7 +87,7 @@ class GasoilRepository extends EntityRepository
         return $price;
     }
 
-    public function getTotalCapacity()
+    public function getTotalCapacityForDriver($driver)
     {
         $capacity = 0;
 
@@ -77,7 +96,9 @@ class GasoilRepository extends EntityRepository
         $qb->select('SUM(g.capacity) capacity')
             ->from('FsbAlfredCoreBundle:Gasoil', 'g')
             ->where($qb->expr()->eq('g.isHidden', ':isHidden'))
+            ->andWhere($qb->expr()->eq('g.driver', ':driver'))
             ->setParameter('isHidden', false)
+            ->setParameter('driver', $driver)
         ;
 
         try {
@@ -89,7 +110,7 @@ class GasoilRepository extends EntityRepository
         return $capacity;
     }
 
-    public function getLastCapacity()
+    public function getLastCapacityForDriver($driver)
     {
         $capacity = 0;
 
@@ -98,7 +119,9 @@ class GasoilRepository extends EntityRepository
         $qb->select('g')
             ->from('FsbAlfredCoreBundle:Gasoil', 'g')
             ->where($qb->expr()->eq('g.isHidden', ':isHidden'))
+            ->andWhere($qb->expr()->eq('g.driver', ':driver'))
             ->setParameter('isHidden', false)
+            ->setParameter('driver', $driver)
             ->orderBy('g.id', 'DESC')
             ->setMaxResults(1)
         ;
@@ -112,7 +135,7 @@ class GasoilRepository extends EntityRepository
         return $capacity;
     }
 
-    public function getTotalAmount()
+    public function getTotalAmountForDriver($driver)
     {
         $amount = 0;
 
@@ -121,7 +144,9 @@ class GasoilRepository extends EntityRepository
         $qb->select('SUM(g.price * g.capacity) amount')
             ->from('FsbAlfredCoreBundle:Gasoil', 'g')
             ->where($qb->expr()->eq('g.isHidden', ':isHidden'))
+            ->andWhere($qb->expr()->eq('g.driver', ':driver'))
             ->setParameter('isHidden', false)
+            ->setParameter('driver', $driver)
         ;
 
         try {
@@ -133,7 +158,7 @@ class GasoilRepository extends EntityRepository
         return $amount;
     }
 
-    public function getKilometersDifference()
+    public function getKilometersDifferenceForDriver($driver)
     {
         $difference = 0;
 
@@ -142,7 +167,9 @@ class GasoilRepository extends EntityRepository
         $qb->select('(MAX(g.kilometers) - MIN(g.kilometers)) difference')
             ->from('FsbAlfredCoreBundle:Gasoil', 'g')
             ->where($qb->expr()->eq('g.isHidden', ':isHidden'))
+            ->andWhere($qb->expr()->eq('g.driver', ':driver'))
             ->setParameter('isHidden', false)
+            ->setParameter('driver', $driver)
         ;
 
         try {
@@ -154,7 +181,7 @@ class GasoilRepository extends EntityRepository
         return $difference;
     }
 
-    public function getAverageLiterPrice()
+    public function getAverageLiterPriceForDriver($driver)
     {
         $average = 0;
 
@@ -163,7 +190,9 @@ class GasoilRepository extends EntityRepository
         $qb->select('AVG(g.price) average')
             ->from('FsbAlfredCoreBundle:Gasoil', 'g')
             ->where($qb->expr()->eq('g.isHidden', ':isHidden'))
+            ->andWhere($qb->expr()->eq('g.driver', ':driver'))
             ->setParameter('isHidden', false)
+            ->setParameter('driver', $driver)
         ;
 
         try {

@@ -11,7 +11,7 @@ class HomeController extends FrontController
         $em = $this->getDoctrine()->getManager();
         $driver = $this->getUser();
 
-        $gasoilDrivenDistance = $em->getRepository('FsbAlfredCoreBundle:Gasoil')->getKilometersDifference();
+        $gasoilDrivenDistance = $em->getRepository('FsbAlfredCoreBundle:Gasoil')->getKilometersDifferenceForDriver($driver);
         $drivenDistance = $driver->getCurrentKilometers() - $driver->getInitialKilometers();
         if ($gasoilDrivenDistance > $drivenDistance) {
             // Still a problem here, however...
@@ -29,21 +29,21 @@ class HomeController extends FrontController
 
         if ($drivenDistance > 0) {
             if ($driver->wouldManageGasoil()) {
-                $averageConsommation = 100 * ($em->getRepository('FsbAlfredCoreBundle:Gasoil')->getTotalCapacity() - $em->getRepository('FsbAlfredCoreBundle:Gasoil')->getLastCapacity()) / $drivenDistance;
-                $averageGasoilPrice = $em->getRepository('FsbAlfredCoreBundle:Gasoil')->getAverageLiterPrice();
-                $gasoilTotalPrice = $em->getRepository('FsbAlfredCoreBundle:Gasoil')->getTotalAmount();
+                $averageConsommation = 100 * ($em->getRepository('FsbAlfredCoreBundle:Gasoil')->getTotalCapacityForDriver($driver) - $em->getRepository('FsbAlfredCoreBundle:Gasoil')->getLastCapacityForDriver($driver)) / $drivenDistance;
+                $averageGasoilPrice = $em->getRepository('FsbAlfredCoreBundle:Gasoil')->getAverageLiterPriceForDriver($driver);
+                $gasoilTotalPrice = $em->getRepository('FsbAlfredCoreBundle:Gasoil')->getTotalAmountForDriver($driver);
                 $averagePrice += $gasoilTotalPrice;
             }
             if ($driver->wouldManageHighway()) {
-                $highwaysTotalPrice = $em->getRepository('FsbAlfredCoreBundle:Highway')->getTotalPrice();
+                $highwaysTotalPrice = $em->getRepository('FsbAlfredCoreBundle:Highway')->getTotalPriceForDriver($driver);
                 $averagePrice += $highwaysTotalPrice;
             }
             if ($driver->wouldManageInsuranceFee()) {
-                $insuranceTotalPrice = $em->getRepository('FsbAlfredCoreBundle:InsuranceFee')->getTotalPrice();
+                $insuranceTotalPrice = $em->getRepository('FsbAlfredCoreBundle:InsuranceFee')->getTotalPriceForDriver($driver);
                 $averagePrice += $insuranceTotalPrice;
             }
             if ($driver->wouldManageReparations()) {
-                $reparationsTotalPrice = $em->getRepository('FsbAlfredCoreBundle:Reparation')->getTotalPrice();
+                $reparationsTotalPrice = $em->getRepository('FsbAlfredCoreBundle:Reparation')->getTotalPriceForDriver($driver);
                 $averagePrice += $reparationsTotalPrice;
             }
 

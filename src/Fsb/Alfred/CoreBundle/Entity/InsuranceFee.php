@@ -67,6 +67,12 @@ class InsuranceFee
     private $price;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Driver")
+     * @ORM\JoinColumn(name="driver_id", referencedColumnName="id")
+     */
+    private $driver;
+
+    /**
      * Public constructor
      *
      * @return InsuranceFee
@@ -248,5 +254,27 @@ class InsuranceFee
     public function getPrice()
     {
         return $this->price;
+    }
+
+    /**
+     * Set driver
+     *
+     * @return InsuranceFee
+     */
+    public function setDriver($driver)
+    {
+        $this->driver = $driver;
+
+        return $this;
+    }
+
+    /**
+     * Get driver
+     *
+     * @return Driver
+     */
+    public function getDriver()
+    {
+        return $this->driver;
     }
 }

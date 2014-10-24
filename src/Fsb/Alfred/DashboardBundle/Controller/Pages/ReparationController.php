@@ -12,13 +12,14 @@ class ReparationController extends FrontController
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
+        $driver = $this->getUser();
 
         $reparation = new Reparation();
         $form = $this->createForm(new ReparationType(), $reparation);
 
-        $reparations = $em->getRepository('FsbAlfredCoreBundle:Reparation')->findAll();
+        $reparations = $em->getRepository('FsbAlfredCoreBundle:Reparation')->findAllForDriver($driver);
 
-        $totalAmount = $em->getRepository('FsbAlfredCoreBundle:Reparation')->getTotalPrice();
+        $totalAmount = $em->getRepository('FsbAlfredCoreBundle:Reparation')->getTotalPriceForDriver($driver);
 
         return $this->render('FsbAlfredDashboardBundle:Pages/Reparation:index.html.twig', array(
             'reparations' => $reparations,
@@ -48,8 +49,9 @@ class ReparationController extends FrontController
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($reparation);
             $driver = $this->getUser();
+            $reparation->setDriver($driver);
+            $em->persist($reparation);
             $kilometers = $reparation->getKilometers();
             if ($kilometers && $kilometers > $driver->getCurrentKilometers()) {
                 $driver->setCurrentKilometers($kilometers);

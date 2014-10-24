@@ -26,7 +26,22 @@ class ReparationRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    public function getTotalKilometers()
+    public function findAllForDriver($driver)
+    {
+        $qb = $this->_em->createQueryBuilder();
+
+        $qb->select('r')
+            ->from('FsbAlfredCoreBundle:Reparation', 'r')
+            ->where($qb->expr()->eq('r.isHidden', ':isHidden'))
+            ->andWhere($qb->expr()->eq('r.driver', ':driver'))
+            ->setParameter('isHidden', false)
+            ->setParameter('driver', $driver)
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function getTotalKilometersForDriver($driver)
     {
         $kilometers = 0;
 
@@ -35,7 +50,9 @@ class ReparationRepository extends EntityRepository
         $qb->select('SUM(r.kilometers) kilometers')
             ->from('FsbAlfredCoreBundle:Reparation', 'r')
             ->where($qb->expr()->eq('r.isHidden', ':isHidden'))
+            ->andWhere($qb->expr()->eq('r.driver', ':driver'))
             ->setParameter('isHidden', false)
+            ->setParameter('driver', $driver)
         ;
 
         try {
@@ -47,7 +64,7 @@ class ReparationRepository extends EntityRepository
         return $kilometers;
     }
 
-    public function getTotalPrice()
+    public function getTotalPriceForDriver($driver)
     {
         $price = 0;
 
@@ -56,7 +73,9 @@ class ReparationRepository extends EntityRepository
         $qb->select('SUM(r.price) price')
             ->from('FsbAlfredCoreBundle:Reparation', 'r')
             ->where($qb->expr()->eq('r.isHidden', ':isHidden'))
+            ->andWhere($qb->expr()->eq('r.driver', ':driver'))
             ->setParameter('isHidden', false)
+            ->setParameter('driver', $driver)
         ;
 
         try {
