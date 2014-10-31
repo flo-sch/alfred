@@ -53,7 +53,8 @@ class HomeController extends FrontController
             'gasoilTotalCost' => $gasoilTotalPrice,
             'highwayTotalCost' => $highwaysTotalPrice,
             'insuranceFeesTotalCost' => $insuranceTotalPrice,
-            'reparationsTotalCost' => $reparationsTotalPrice
+            'reparationsTotalCost' => $reparationsTotalPrice,
+            'drivenDistance' => $drivenDistance
         ));
     }
 }

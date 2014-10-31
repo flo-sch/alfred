@@ -10,24 +10,28 @@
                 <table class='table table-bordered table-hover'>
                     <tbody>
                         <tr>
+                            <th>Distance parcourue depuis l'achat</th>
+                            <td>{{ drivenDistance|number_format(0, '.', ' ') }} kms</td>
+                        </tr>
+                        <tr>
                             <th>Consommation moyenne</th>
-                            <td>{% if app.user.wouldManageGasoil %}{{ averageConsommation|number_format(2, '.', ',') }} L / 100kms{% else %}Carburant non pris en charge{% endif %}</td>
+                            <td>{% if app.user.wouldManageGasoil %}{{ averageConsommation|number_format(2, '.', ' ') }} L / 100kms{% else %}Carburant non pris en charge{% endif %}</td>
                         </tr>
                         <tr>
                             <th>Prix moyen du carburant</th>
-                            <td>{% if app.user.wouldManageGasoil %}{{ averageLiterPrice|number_format(3, '.', ',') }} €{% else %}Carburant non pris en charge{% endif %}</td>
+                            <td>{% if app.user.wouldManageGasoil %}{{ averageLiterPrice|number_format(3, '.', ' ') }} €{% else %}Carburant non pris en charge{% endif %}</td>
                         </tr>
                         <tr>
                             <th>Coût total de l'autoroute</th>
-                            <td>{% if app.user.wouldManageHighway %}{{ highwayTotalCost|number_format(2, '.', ',') }} €{% else %}Autoroute non prise en charge{% endif %}</td>
+                            <td>{% if app.user.wouldManageHighway %}{{ highwayTotalCost|number_format(2, '.', ' ') }} €{% else %}Autoroute non prise en charge{% endif %}</td>
                         </tr>
                         <tr>
                             <th>Coût total de l'assurance</th>
-                            <td>{% if app.user.wouldManageInsuranceFee %}{{ insuranceFeesTotalCost|number_format(2, '.', ',') }} €{% else %}Assurance non prise en charge{% endif %}</td>
+                            <td>{% if app.user.wouldManageInsuranceFee %}{{ insuranceFeesTotalCost|number_format(2, '.', ' ') }} €{% else %}Assurance non prise en charge{% endif %}</td>
                         </tr>
                         <tr>
                             <th>Coût total des réparations</th>
-                            <td>{% if app.user.wouldManageReparations %}{{ reparationsTotalCost|number_format(2, '.', ',') }} €{% else %}Réparations non prises en charge{% endif %}</td>
+                            <td>{% if app.user.wouldManageReparations %}{{ reparationsTotalCost|number_format(2, '.', ' ') }} €{% else %}Réparations non prises en charge{% endif %}</td>
                         </tr>
                         <tr>
                             <th>Coût moyen total au kilomètre</th>
@@ -56,7 +60,7 @@
                 <input id='carPoolers' v-model='carPoolers' class='form-control' type='number' name='carPoolers' placeholder='3' />
             </div>
             <div class='form-group'>
-                <span>Prix pour chacun : <span id='trip-cost' class='badge badge-info'>{% raw %}{{ (kilometers * kilometerCost / carPoolers) | rounded2 }}€{% endraw %}</span></span>
+                <span>Prix pour chacun : <span id='trip-cost' class='badge'>{% raw %}{{ (kilometers * kilometerCost / carPoolers) | rounded2 }}€{% endraw %}</span></span>
             </div>
         </form>
     </div>
