@@ -123,7 +123,7 @@
         </div>
         {% if gasoils|length > 1 %}
             <div class='tab-pane' id='statistiques'>
-                <h4>Statistiques <b class='pull-right'>Consommation moyenne : <span class='badge badge-info'>{{ (100 * (totalCapacity - gasoils|last.capacity) / (gasoils|last.kilometers - gasoils|first.kilometers))|number_format(2, '.', ' ') }} L / 100 kms</span></b></h4>
+                <h4>Statistiques <b class='pull-right'>Consommation moyenne : <span class='badge'>{{ averageConsommation|number_format(2, '.', ' ') }} L / 100 kms</span></b></h4>
                 <hr />
                 <canvas id='gasoil-chart' class='chart'></canvas>
             </div>

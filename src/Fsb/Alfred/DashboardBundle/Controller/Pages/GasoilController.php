@@ -17,6 +17,10 @@ class GasoilController extends FrontController
         $gasoil = new Gasoil();
         $form = $this->createForm(new GasoilType(), $gasoil);
 
+        $gasoilDrivenDistance = $em->getRepository('FsbAlfredCoreBundle:Gasoil')->getMaxKilometersForDriver($driver);
+        $drivenDistance = max($driver->getCurrentKilometers(), $gasoilDrivenDistance) - $driver->getInitialKilometers();
+        $averageConsommation = 100 * ($em->getRepository('FsbAlfredCoreBundle:Gasoil')->getTotalCapacityForDriver($driver) - $em->getRepository('FsbAlfredCoreBundle:Gasoil')->getLastCapacityForDriver($driver)) / $drivenDistance;
+
         $gasoils = $em->getRepository('FsbAlfredCoreBundle:Gasoil')->findAllForDriver($driver);
 
         return $this->render('FsbAlfredDashboardBundle:Pages/Gasoil:index.html.twig', array(
@@ -24,7 +28,8 @@ class GasoilController extends FrontController
             'form' => $form->createView(),
             'totalPrice' => $em->getRepository('FsbAlfredCoreBundle:Gasoil')->getTotalPriceForDriver($driver),
             'totalCapacity' => $em->getRepository('FsbAlfredCoreBundle:Gasoil')->getTotalCapacityForDriver($driver),
-            'totalAmount' => $em->getRepository('FsbAlfredCoreBundle:Gasoil')->getTotalAmountForDriver($driver)
+            'totalAmount' => $em->getRepository('FsbAlfredCoreBundle:Gasoil')->getTotalAmountForDriver($driver),
+            'averageConsommation' => $averageConsommation,
         ));
     }
 
