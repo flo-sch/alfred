@@ -94,7 +94,7 @@
         context = $canvas.get(0).getContext('2d');
         {% if app.user.wouldManageGasoil %}
             data.push({
-                value: {{ gasoilTotalCost|number_format(2, '.', ',') }},
+                value: {{ gasoilTotalCost|number_format(2, '.', '') }},
                 color: 'rgba(34, 49, 63, 0.15)',
                 highlight: 'rgba(34, 49, 63, 0.85)',
                 label: 'Carburant'
@@ -102,7 +102,7 @@
         {% endif %}
         {% if app.user.wouldManageHighway %}
             data.push({
-                value: {{ highwayTotalCost|number_format(2, '.', ',') }},
+                value: {{ highwayTotalCost|number_format(2, '.', '') }},
                 color: 'rgba(34, 49, 63, 0.15)',
                 highlight: 'rgba(34, 49, 63, 0.85)',
                 label: 'Autoroute'
@@ -110,7 +110,7 @@
         {% endif %}
         {% if app.user.wouldManageInsuranceFee %}
             data.push({
-                value: {{ insuranceFeesTotalCost|number_format(2, '.', ',') }},
+                value: {{ insuranceFeesTotalCost|number_format(2, '.', '') }},
                 color: 'rgba(34, 49, 63, 0.15)',
                 highlight: 'rgba(34, 49, 63, 0.85)',
                 label: 'Assurance'
@@ -118,7 +118,7 @@
         {% endif %}
         {% if app.user.wouldManageReparations %}
             data.push({
-                value: {{ reparationsTotalCost|number_format(2, '.', ',') }},
+                value: {{ reparationsTotalCost|number_format(2, '.', '') }},
                 color: 'rgba(34, 49, 63, 0.15)',
                 highlight: 'rgba(34, 49, 63, 0.85)',
                 label: 'Réparations'
