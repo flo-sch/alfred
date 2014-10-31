@@ -64,6 +64,21 @@
 
 {% block javascripts %}
     {{ parent() }}
+    <script src='{{ asset('bundles/fsbalfreddashboard/js/vendor/vue-0.10.6.min.js') }}'></script>
+    <script src='{{ asset('bundles/fsbalfreddashboard/js/vendor/numeral-1.5.3.min.js') }}'></script>
+    <script>
+        Vue.filter('rounded2', function (value) {
+            return numeral(value).format('0.00');
+        });
+        new Vue({
+            el: '#trip-cost-form',
+            data: {
+                kilometerCost: {{ averageCost|number_format(2, '.', ',') }},
+                kilometers: 100,
+                carPoolers: 3
+            }
+        });
+    </script>
     <script src='{{ asset('bundles/fsbalfreddashboard/js/vendor/chart.js') }}'></script>
     <script>
         Chart.defaults.global.responsive = !0;
@@ -112,23 +127,6 @@
             tooltipTemplate: {% raw %}'<%if (label){%><%=label%>: <%}%><%= value %>€'{% endraw %},
             tooltipEvents: ['mousemove', 'mousedown', 'touchstart', 'touchmove'],
             animationEasing: 'easeOutCirc'
-        });
-    </script>
-    <script src='{{ asset('bundles/fsbalfreddashboard/js/vendor/vue-0.10.6.min.js') }}'></script>
-    <script src='{{ asset('bundles/fsbalfreddashboard/js/vendor/numeral-1.5.3.min.js') }}'></script>
-    <script>
-        $(function () {
-            Vue.filter('rounded2', function (value) {
-                return numeral(value).format('0.00');
-            });
-            new Vue({
-                el: '#trip-cost-form',
-                data: {
-                    kilometerCost: {{ averageCost|number_format(2, '.', ',') }},
-                    kilometers: 100,
-                    carPoolers: 3
-                }
-            })
         });
     </script>
 {% endblock %}
