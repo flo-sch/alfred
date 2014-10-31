@@ -31,7 +31,9 @@
     "moment": "~2.8.2",
     "mjolnic-bootstrap-colorpicker": "~2.0.0",
     "fontawesome-iconpicker": "https://github.com/mjolnic/fontawesome-iconpicker/",
-    "chartjs": "~0.2.0"
+    "chartjs": "~0.2.0",
+    "vue": "~0.10.6",
+    "numeraljs": "~1.5.3"
   },
   "resolutions": {
     "jquery": "~2.1.1",

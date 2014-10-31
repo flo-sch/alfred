@@ -181,6 +181,29 @@ class GasoilRepository extends EntityRepository
         return $difference;
     }
 
+    public function getMaxKilometersForDriver($driver)
+    {
+        $max = 0;
+
+        $qb = $this->_em->createQueryBuilder();
+
+        $qb->select('MAX(g.kilometers) maxDrivenKilometers')
+            ->from('FsbAlfredCoreBundle:Gasoil', 'g')
+            ->where($qb->expr()->eq('g.isHidden', ':isHidden'))
+            ->andWhere($qb->expr()->eq('g.driver', ':driver'))
+            ->setParameter('isHidden', false)
+            ->setParameter('driver', $driver)
+        ;
+
+        try {
+            $result = $qb->getQuery()->getSingleResult();
+            $max = (float) $result['maxDrivenKilometers'];
+        }
+        catch (NoResultException $e) {}
+
+        return $max;
+    }
+
     public function getAverageLiterPriceForDriver($driver)
     {
         $average = 0;

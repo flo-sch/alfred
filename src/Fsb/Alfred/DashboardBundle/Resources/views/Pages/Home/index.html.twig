@@ -44,6 +44,22 @@
             </div>
         </div>
     </div>
+    <div>
+        <h3>Vous emmenez des covoitureurs ? <small>Calculez simplement combien chacun vous doit!</small></h3>
+        <form id='trip-cost-form' class='form-inline'>
+            <div class='form-group'>
+                <label for='kilometers'>Kilomètres</label>
+                <input id='kilometers' v-model='kilometers' class='form-control' type='number' name='kilometers' placeholder='100' />
+            </div>
+            <div class='form-group'>
+                <label for='carPoolers'>Covoitureurs</label>
+                <input id='carPoolers' v-model='carPoolers' class='form-control' type='number' name='carPoolers' placeholder='3' />
+            </div>
+            <div class='form-group'>
+                <span>Prix pour chacun : <span id='trip-cost' class='badge badge-info'>{% raw %}{{ (kilometers * kilometerCost / carPoolers) | rounded2 }}€{% endraw %}</span></span>
+            </div>
+        </form>
+    </div>
 {% endblock %}
 
 {% block javascripts %}
@@ -96,6 +112,23 @@
             tooltipTemplate: {% raw %}'<%if (label){%><%=label%>: <%}%><%= value %>€'{% endraw %},
             tooltipEvents: ['mousemove', 'mousedown', 'touchstart', 'touchmove'],
             animationEasing: 'easeOutCirc'
+        });
+    </script>
+    <script src='{{ asset('bundles/fsbalfreddashboard/js/vendor/vue-0.10.6.min.js') }}'></script>
+    <script src='{{ asset('bundles/fsbalfreddashboard/js/vendor/numeral-1.5.3.min.js') }}'></script>
+    <script>
+        $(function () {
+            Vue.filter('rounded2', function (value) {
+                return numeral(value).format('0.00');
+            });
+            new Vue({
+                el: '#trip-cost-form',
+                data: {
+                    kilometerCost: {{ averageCost|number_format(2, '.', ',') }},
+                    kilometers: 100,
+                    carPoolers: 3
+                }
+            })
         });
     </script>
 {% endblock %}
